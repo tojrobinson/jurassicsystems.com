@@ -1,0 +1,282 @@
+body {
+   overflow-x: hidden;
+   overflow-y: scroll;
+   padding: 0px;
+   margin: 0px;
+   background: black;
+}
+
+#environment {
+   position: relative;
+}
+
+#irix-boot {
+   position: absolute;
+   background: #6ba1d8;
+   z-index: 60000;
+   margin-left: 10px;
+   margin-top: 10px;
+   width: 1124px;
+   height: 850px;
+}
+
+#boot-dialogue {
+   position: absolute;
+   margin: auto;
+   top: 200px;
+   left: 0;
+   right: 0;
+}
+
+#home-key {
+   position: fixed;
+   bottom: 10px;
+   right: 10px;
+   opacity: 0.7;
+}
+
+#home-key:hover {
+   opacity: 1;
+}
+
+#command-help {
+   width: 300px;
+   position: absolute;
+   bottom: 150px;
+   right: 20px;
+   z-index: 62000;
+   color: white;
+}
+
+#commands-title {
+   opacity: 0.7;
+}
+
+#command-help .highlighted {
+   background: #444;
+}
+
+#command-help td {
+   border: solid 1px #444;
+   padding: 5px;
+}
+
+#irix-desktop {
+   background-image: url("/img/irixBackground.jpg");
+   background-repeat: no-repeat;
+   overflow: hidden;
+   margin-left: 10px;
+   margin-top: 10px;
+   width: 1124px;
+   height: 850px;
+   overflow: hidden;
+}
+
+#apple-desktop {
+   background-image: url("/img/appleBackground.jpg");
+   background-repeat: no-repeat;
+   overflow: hidden;
+   margin-left: 10px;
+   margin-top: 10px;
+   position: absolute;
+   left: -3000px;
+   width: 1124px;
+   height: 850px;
+   border-radius: 10px;
+}
+
+#main-terminal {
+   height: 582px;
+   width: 815px;
+   margin: auto;
+   padding-top: 31px;
+   padding-left: 30px;
+   background-image: url("/img/mainTerm.jpg");
+   background-repeat: no-repeat;
+   position: absolute;
+   top: 120px;
+   left: 160px;
+}
+
+#main-terminal .inner-wrap {
+   height: 570px;
+   width: 800px;
+   overflow: hidden;
+}
+
+.irix-window{
+}
+
+.command-history, .command-input, .entered-command {
+   white-space: pre;
+}
+
+#chess-terminal {
+   background-image: url("/img/chessTerm.jpg");
+   background-repeat: no-repeat;
+   padding-top: 31px;
+   padding-left: 30px;
+   height: 215px;
+   width: 820px;
+   position: absolute;
+   top: 600px;
+   left: 5px;
+}
+
+#chess-terminal .inner-wrap {
+   height: 207px;
+   width: 805px;
+   overflow: hidden;
+}
+
+#zebra-girl {
+   height: 760px;
+   width: 662px;
+   position: absolute;
+   display: none;
+   right: 20px;
+   top: 40px;
+   background-image: url("/img/zebraGirlWindow.jpg");
+}
+
+.terminal-view {
+   font-family: 'Courier';
+   font-weight: 700;
+   font-size: 15px;
+   color: #CCCCCC;
+   word-wrap: break-word;
+}
+
+.terminal-input {
+   width: 100%;
+}
+
+#gr-osview {
+   background-image: url('/img/grOsview.gif');
+   background-repeat: no-repeat;
+   height: 369px;
+   width: 393px;
+   position: absolute;
+   top: 220px;
+   left: 70px;
+}
+
+#the-king-window {
+   display: none;
+   background-image: url('/img/theKingFocus.jpg');
+   background-repeat: no-repeat;
+   width: 600px;
+   height: 620px;
+   position: absolute;
+   left: 50px;
+   top: 130px;
+   text-align: center;
+}
+
+#the-king-animation {
+   position: absolute;
+   top: 40px;
+   left: 80px;
+   z-index: 64000;
+}
+
+#the-king-blur {
+   background-image: url('/img/theKingBlur.jpg');
+   width: 600px;
+   height: 620px;
+   position: absolute;
+   top: 0;
+   left: 0;
+   opacity: 0;
+}
+
+#king-animation {
+   margin: 50px;
+   z-index: 50000;
+}
+
+#king-swf {
+   z-index: 64000;
+}
+
+#mac-hd-window {
+   width: 556px;
+   height: 566px;
+   background-image: url("/img/macHDFocus.jpg");
+   background-repeat: no-repeat;
+   position: absolute;
+   left: 15px;
+   top: 100px
+}
+
+.buffer {
+   position: absolute;
+   left: -10000px;
+   top: -10000px;
+}
+
+.hide {
+   display: none;
+}
+
+.cursor {
+   font-size: 15px;
+   border: solid 1px #5fde5f;
+}
+
+.active-cursor {
+   background: #5fde5f;
+}
+
+#irix-desktop {
+   position: absolute;
+}
+
+table td, tr {
+   padding: 0px;
+   text-align: left;
+   line-height: 15px;
+}
+
+#chess-terminal table td, tr {
+   padding-left: 5px;
+   padding-right: 5px;
+   line-height: 13px;
+   width: 50px;
+}
+
+#system-output td{
+   width: 185px;
+}
+
+input[type="button"], button {
+   border:0 none;
+   font:inherit;
+}
+
+*:focus{outline:0 none;}
+input[type="button"], button {-moz-box-sizing: content-box;}
+input[type="button"]::-moz-focus-inner, button::-moz-focus-inner { padding:0;border:0 none; }
+
+.button {
+   background-image:url("/img/buttonOverlay.png");
+   -moz-border-radius:5px;
+   -webkit-border-radius:5px;
+   border-radius:5px;
+   cursor:pointer;
+   display:inline-block;
+   line-height:1;
+   overflow:visible;
+   position:relative;
+   text-decoration:none;
+   width:auto;
+   text-align:center;
+   background-color:#FFFFFF;
+   border:1px solid #CCCCCC;
+   color:#666666 !important;
+   font-weight:normal;
+   font-size:14px;
+   font-family: 'Arial';
+   text-shadow:0 1px 1px #FFFFFF;
+   padding:7px 16px;
+}
