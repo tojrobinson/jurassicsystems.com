@@ -1,4 +1,5 @@
-Original Jurassic Park system in HTML5/JS.
+#[Jurassic Systems](http://www.jurassicsystems.com)
+HTML5/Javascript recreation of the original Jurassic Park movie computer system.
 
 ##License
 The MIT License (MIT)
