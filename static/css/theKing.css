@@ -1,0 +1,81 @@
+body {
+   overflow-x: hidden;
+   overflow-y: scroll;
+   padding: 0px;
+   margin: 0px;
+   background: black;
+}
+
+#environment {
+   position: relative;
+}
+
+#home-key {
+   position: fixed;
+   bottom: 10px;
+   right: 10px;
+   opacity: 0.7;
+}
+
+#home-key:hover {
+   opacity: 1;
+}
+
+#apple-desktop {
+   background-image: url("/img/appleBackground.jpg");
+   background-repeat: no-repeat;
+   overflow: hidden;
+   margin-left: 10px;
+   margin-top: 10px;
+   position: absolute;
+   width: 1124px;
+   height: 850px;
+   border-radius: 10px;
+}
+#the-king-window {
+   display: none;
+   background-image: url('/img/theKingFocus.jpg');
+   background-repeat: no-repeat;
+   width: 600px;
+   height: 620px;
+   position: absolute;
+   left: 50px;
+   top: 130px;
+   text-align: center;
+}
+
+#the-king-animation {
+   position: absolute;
+   top: 40px;
+   left: 80px;
+   z-index: 64000;
+}
+
+#the-king-blur {
+   background-image: url('/img/theKingBlur.jpg');
+   width: 600px;
+   height: 620px;
+   position: absolute;
+   top: 0;
+   left: 0;
+   opacity: 0;
+}
+
+#king-animation {
+   margin: 50px;
+   z-index: 50000;
+}
+
+#king-swf {
+   z-index: 64000;
+}
+
+#mac-hd-window {
+   width: 556px;
+   height: 566px;
+   background-image: url("/img/macHDFocus.jpg");
+   background-repeat: no-repeat;
+   position: absolute;
+   left: 15px;
+   top: 100px
+}

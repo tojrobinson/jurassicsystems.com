@@ -1,0 +1,132 @@
+body {
+   font-family: 'Open Sans';
+}
+
+hr {
+   margin-top: 5px;
+   margin-bottom: 5px;
+   border: 0;
+   border-top: 1px solid #eeeeee;
+}
+
+a {
+   text-decoration: none;
+   color: #164cc6;
+}
+
+a:hover {
+   text-decoration: underline;
+}
+
+h1,h2, h3 {
+   margin: 0px;
+}
+
+input[type="button"], button {
+   border:0 none;
+   font:inherit;
+}
+
+*:focus{outline:0 none;}
+
+input[type="button"], button {-moz-box-sizing: content-box;}
+
+input[type="button"]::-moz-focus-inner, button::-moz-focus-inner { padding:0;border:0 none; }
+
+table  {
+   margin: 10px;
+}
+
+tr:hover {
+   background: #eeeeee;
+}
+
+td {
+   border: 1px solid #cccccc;
+}
+
+td,th {
+   padding: 5px;
+   padding-left: 20px;
+   padding-right: 20px;
+}
+
+.highlighted {
+   background: #eeeeee;
+}
+
+.button {
+   background-image:url("/img/buttonOverlay.png");
+   -moz-border-radius:5px;
+   -webkit-border-radius:5px;
+   border-radius:5px;
+   cursor:pointer;
+   display:inline-block;
+   line-height:1;
+   overflow:visible;
+   position:relative;
+   text-decoration:none;
+   width:auto;
+   text-align:center;
+   background-color:#FFFFFF;
+   border:1px solid #CCCCCC;
+   color:#666666 !important;
+   font-weight:normal;
+   font-size:14px;
+   font-family: 'Arial';
+   text-shadow:0 1px 1px #FFFFFF;
+   padding:5px 10px;
+}
+
+.container {
+   width: 850px;
+   margin-left: auto;
+   margin-right: auto;
+   padding: 20px;
+   overflow: hidden;
+}
+
+.container:after {
+   clear: both;
+}
+
+.text-block {
+   text-align: left;
+   color: #454545;
+   font-size: 17px;
+}
+
+.center-justify {
+   text-align: center;
+}
+
+.inline {
+   float: left;
+   margin: 10px;
+}
+
+#action-frame {
+   margin-top: 10px;
+   margin-left: auto;
+   margin-right: auto;
+   overflow: hidden;
+   width: 850px;
+   padding: 10px;
+}
+
+.img {
+   padding: 10px;
+}
+
+#launch-button {
+   height: 315px;
+   line-height: 515px;
+   text-align: center;
+   vertical-align: center;
+   margin-left: 50px;
+}
+
+#launch-button:hover {
+   opacity: 0.7;
+   cursor: pointer;
+}
