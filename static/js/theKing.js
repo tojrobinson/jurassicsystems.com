@@ -22,7 +22,7 @@
             }, 10000);
          }
 
-      }, 2000);
+      }, 2500);
    });
 
    var flicker = function(altId, interval, duration) {
