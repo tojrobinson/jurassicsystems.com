@@ -28,28 +28,48 @@ body {
    position: absolute;
    display: none;
    background: url('/img/introBackground.png');
-   text-align: center;
    z-index: 60000;
    margin-left: 10px;
    margin-top: 10px;
+   color: #bbb;
+}
+
+#intro-scene {
+   display: block;
 }
 
 #intro-box {
-   position: absolute;
-   top: 122.5px;
+   position: fixed;
+   top: 170px;
    left: 278px;
    background: black;
-   height: 350px;
    padding: 20px;
 }
 
-#skip-intro {
-   color: white;
-   font-size: 30px;
+#intro-text {
+   width: 450px;
+   color: #cdcdcd;
+   font-family: Helvetica;
+   font-size: 15px;
+   margin-top: 17px;
+   display: inline-block;
+}
+
+#intro-divider {
+   height: 50px;
+   margin-left: 10px;
+   margin-right: 10px;
+   display: inline-block;
+   border-left: solid 1px #777777;
+}
+
+#continue-button {
+   display: inline-block;
+   margin-top: 20px;
+}
+
+#continue-button:hover {
    cursor: pointer;
-   position: absolute;
-   bottom: 5px;
-   right: 5px;
 }
 
 #boot-dialogue {
