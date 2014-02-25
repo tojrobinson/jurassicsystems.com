@@ -112,7 +112,7 @@
           magicWord = inputLine.trim().substring(inputLine.lastIndexOf(' '));
 
       if (arg === '') {
-         $('#main-input').append($('<span/>').text('access: must specify a target.'));
+         $('#main-input').append($('<span/>').text('access: must specify a target'));
 
          return;
       } else if (inputLine.split(' ').length > 2 && magicWord.trim() === 'please') {
@@ -265,7 +265,8 @@
       $('.mac-window').draggable();
 
       // attempt to cache objects
-      $(['theKingBlur.jpg',
+      $(['introBackground.png',
+         'theKingBlur.jpg',
          'theKingFocus.jpg',
          'macHDBlur.jpg',
          'asciiNewman.jpg',
@@ -281,10 +282,14 @@
       setTimeout(function() {
          $('#irix-boot').remove();
          $('#main-buffer').focus();
-         $('#intro').show();
-         $('#skip-intro').click(function() {
-            $('#intro').hide();
-         });
+
+         if (!location.pathname.match(/system/)) {
+            $('#intro').show();
+            $('#intro').click(function() {
+               $(this).fadeOut(1000);
+               $('#intro-scene').attr('src', '');
+            });
+         }
       }, 4500);
 
       // listeners
