@@ -4,6 +4,8 @@ body {
    padding: 0px;
    margin: 0px;
    background: black;
+   width: 100%;
+   height: 100%;
 }
 
 #environment {
@@ -18,6 +20,36 @@ body {
    margin-top: 10px;
    width: 1124px;
    height: 850px;
+}
+
+#intro {
+   height: 100%;
+   width: 100%;
+   position: absolute;
+   display: none;
+   background: url('/img/introBackground.png');
+   text-align: center;
+   z-index: 60000;
+   margin-left: 10px;
+   margin-top: 10px;
+}
+
+#intro-box {
+   position: absolute;
+   top: 122.5px;
+   left: 278px;
+   background: black;
+   height: 350px;
+   padding: 20px;
+}
+
+#skip-intro {
+   color: white;
+   font-size: 30px;
+   cursor: pointer;
+   position: absolute;
+   bottom: 5px;
+   right: 5px;
 }
 
 #boot-dialogue {

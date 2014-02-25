@@ -281,6 +281,10 @@
       setTimeout(function() {
          $('#irix-boot').remove();
          $('#main-buffer').focus();
+         $('#intro').show();
+         $('#skip-intro').click(function() {
+            $('#intro').hide();
+         });
       }, 4500);
 
       // listeners
