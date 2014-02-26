@@ -186,7 +186,7 @@
                   '<table id="system-output"><tbody>' +
                   '<tr><td>Security</td><td>[OK]</td></tr>' +
                   '<tr><td>Fence</td><td>[OK]</tr>' +
-                  '<tr><td>Feeding Pavillion</td><td>[OK]</td></tr>' +
+                  '<tr><td>Feeding Pavilion</td><td>[OK]</td></tr>' +
                   '</tbody></table>';
 
          $('#main-prompt').addClass('hide');
