@@ -112,7 +112,7 @@
           magicWord = inputLine.trim().substring(inputLine.lastIndexOf(' '));
 
       if (arg === '') {
-         $('#main-input').append($('<span/>').text('access: must specify a target'));
+         $('#main-input').append($('<span/>').text('access: must specify target system'));
 
          return;
       } else if (inputLine.split(' ').length > 2 && magicWord.trim() === 'please') {
@@ -177,7 +177,7 @@
 
    JPTERMINAL.addCommand('system', function(env, inputLine) {
       var arg = inputLine.split(/ +/)[1] || '',
-          output = '<span>system: system not specified</span>';
+          output = '<span>system: must specify target system</span>';
 
       if (arg.length > 0) {
          arg = arg.replace(/s$/, '');
