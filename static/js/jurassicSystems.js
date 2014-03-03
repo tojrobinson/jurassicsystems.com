@@ -40,47 +40,33 @@
       }
 
       api.init = function() {
-         if (navigator.userAgent.match(/chrome|chromium/i)) {
-            // wtf chrome
-            var beepChrome = $('<audio preload="auto"/>'),
-                lockDownChrome = $('<audio preload="auto"/>');
+         // HTML5 audio element detection
+         if (Modernizr.audio.mp3 || Modernizr.audio.wav || Modernizr.audio.ogg) {
+            var beepHTML5 = $('<audio preload="auto"/>'),
+                lockDownHTML5 = $('<audio preload="auto"/>');
 
-            beepChrome.append('<source src="/snd/beep.ogg">');
-            beepChrome.append('<source src="/snd/beep.mp3">');
-            beepChrome.append('<source src="/snd/beep.wav">');
+            beepHTML5.append('<source src="/snd/beep.ogg">');
+            beepHTML5.append('<source src="/snd/beep.mp3">');
+            beepHTML5.append('<source src="/snd/beep.wav">');
 
-            lockDownChrome.append('<source src="/snd/lockDown.ogg">');
-            lockDownChrome.append('<source src="/snd/lockDown.mp3">');
-            lockDownChrome.append('<source src="/snd/lockDown.wav">');
+            lockDownHTML5.append('<source src="/snd/lockDown.ogg">');
+            lockDownHTML5.append('<source src="/snd/lockDown.mp3">');
+            lockDownHTML5.append('<source src="/snd/lockDown.wav">');
 
             env.sounds.beep = {
                play: function() {
-                  beepChrome[0].load();
-                  beepChrome[0].play();
+                  beepHTML5[0].load();
+                  beepHTML5[0].play();
                }
             };
 
             env.sounds.lockDown = {
                play: function() {
-                  lockDownChrome[0].load();
-                  lockDownChrome[0].play();
+                  lockDownHTML5[0].load();
+                  lockDownHTML5[0].play();
                }
             };
-         } else if (navigator.userAgent.match(/safari/i)) {
-            alert("Don't use Safari.");
-
-            env.sounds.beep = {
-               play: function() {
-                  alert("Don't use Safari.");
-               }
-            };
-
-            env.sounds.lockDown = {
-               play: function() {
-                  alert("Don't use Safari.");
-               }
-            };
-         } else {
+         }  else {
             sm.setup({ 
                url: '/swf/soundManager/',
                onready: function() {
