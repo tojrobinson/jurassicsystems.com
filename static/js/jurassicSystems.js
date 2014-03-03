@@ -168,6 +168,8 @@
       if (arg.length > 0) {
          arg = arg.replace(/s$/, '');
          arg = arg[0].toUpperCase() + arg.slice(1);
+         arg = $("<div/>").text(arg).html();
+         
          output = '<div>' + arg + ' containment enclosure....</div>' +
                   '<table id="system-output"><tbody>' +
                   '<tr><td>Security</td><td>[OK]</td></tr>' +
