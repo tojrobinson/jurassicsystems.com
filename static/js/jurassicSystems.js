@@ -89,6 +89,21 @@
       return api;
    }());
 
+   var entityMap = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': '&quot;',
+      "'": '&#39;',
+      "/": '&#x2F;'
+   };
+   
+   function escapeHtml(string) {
+      return String(string).replace(/[&<>"'\/]/g, function (s) {
+         return entityMap[s];
+      });
+   }
+
    JPTERMINAL.init();
    JPTERMINAL.activeTerminal('main-terminal');
 
@@ -168,7 +183,7 @@
       if (arg.length > 0) {
          arg = arg.replace(/s$/, '');
          arg = arg[0].toUpperCase() + arg.slice(1);
-         output = '<div>' + arg + ' containment enclosure....</div>' +
+         output = '<div>' + escapeHtml(arg) + ' containment enclosure....</div>' +
                   '<table id="system-output"><tbody>' +
                   '<tr><td>Security</td><td>[OK]</td></tr>' +
                   '<tr><td>Fence</td><td>[OK]</tr>' +
