@@ -80,6 +80,10 @@
                   dennisMusicHTML5[0].pause();
                }
             };
+
+            dennisMusicHTML5.bind('ended', function() {
+               env.sounds.dennisMusic.play();
+            });
          }  else {
             sm.setup({ 
                url: '/swf/soundManager/',
@@ -87,7 +91,7 @@
                   env.sounds.beep = sm.createSound({
                      id: 'beep',
                      autoLoad: true,
-                  url: '/snd/beep.mp3'
+                     url: '/snd/beep.mp3'
                   });
 
                   env.sounds.lockDown = sm.createSound({
@@ -116,16 +120,16 @@
    jpTerminal.activeTerminal('main-terminal');
 
    jpTerminal.addCommand('music', function(env, inputLine) {
-      var args = inputLine.split(/ +/),
+      var arg = inputLine.split(/ +/)[1] || '',
           output = $('<span/>').text('music: must specify state [on|off]');
 
-      if (args.length > 1) {
-         if (args[1].toLowerCase() === 'on') {
+      if (arg) {
+         if (arg.toLowerCase() === 'on') {
             if (!env.musicOn) {
                env.sounds.dennisMusic.play();
             }
             env.musicOn = true;
-         } else if (args[1].toLowerCase() === 'off') {
+         } else if (arg.toLowerCase() === 'off') {
             env.sounds.dennisMusic.stop();
             env.musicOn = false;
          } else {
