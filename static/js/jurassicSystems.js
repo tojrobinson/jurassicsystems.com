@@ -194,7 +194,12 @@
    JPTERMINAL.addCommand('ls', function(env, inputLine) {
       $('#main-input').append($('<div>zebraGirl.jpg</div>'));
    });
-
+   
+   JPTERMINAL.addCommand('echo', function(env, inputLine) {
+      var args = inputLine.trim().replace(/echo /,'');
+      $('#main-input').append($('<div>'+args+'<div>'));
+   });
+   
    JPTERMINAL.addCommand('display', function(env, inputLine) {
       var args = inputLine.trim().split(' ');
 
