@@ -192,24 +192,34 @@
    });
 
    JPTERMINAL.addCommand('ls', function(env, inputLine) {
-      $('#main-input').append($('<div>zebraGirl.jpg</div>'));
+      var arg = inputLine.trim().split(/ +/)[1] || '';
+      arg = $('<div/>').text(arg).html();
+
+      if (arg == '' || arg == 'zebraGirl.jpg') {
+         $('#main-input').append($('<span>zebraGirl.jpg</span>'));
+      } else {
+         $('#main-input').append($('<span>ls: ' + arg + ': no such file or directory</span>'));
+      }
    });
 
    JPTERMINAL.addCommand('display', function(env, inputLine) {
-      var args = inputLine.trim().split(' ');
-
-      if (args.length < 2) {
+      var arg = inputLine.trim().split(/ +/)[1] || '';
+      arg = $('<div/>').text(arg).html();
+          
+      if (arg == '') {
          $('#main-input').append($('<span>display: no file specified</span>'));
          return;
       }
-
-      if (inputLine.match(/zebraGirl\.jpg/)) {
+      
+      if (arg == 'zebraGirl\.jpg') {
          setTimeout(function() {
             $('#zebra-girl').css('z-index', ++env.maxIndex);
             $('#zebra-girl').show();
             $('#main-buffer').blur();
             blurAllWindows();
          }, 300);
+      } else {
+         $('#main-input').append($('<span>display: ' + arg + ': no such file or directory</span>'));
       }
    });
 
