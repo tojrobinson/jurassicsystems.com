@@ -1,7 +1,7 @@
 // Jurassic Systems v0.1.0
 // Tully Robinson (1/1/2014)
 (function($, sm) {
-   var JPTERMINAL = (function() {
+   var jpTerminal = (function() {
       var env = {
              active: null,
              accessAttempts: 0,
@@ -43,7 +43,8 @@
          // HTML5 audio element detection
          if (Modernizr.audio.mp3 || Modernizr.audio.wav || Modernizr.audio.ogg) {
             var beepHTML5 = $('<audio preload="auto"/>'),
-                lockDownHTML5 = $('<audio preload="auto"/>');
+                lockDownHTML5 = $('<audio preload="auto"/>'),
+                dennisMusicHTML5 = $('<audio preload="auto"/>');
 
             beepHTML5.append('<source src="/snd/beep.ogg">');
             beepHTML5.append('<source src="/snd/beep.mp3">');
@@ -52,6 +53,10 @@
             lockDownHTML5.append('<source src="/snd/lockDown.ogg">');
             lockDownHTML5.append('<source src="/snd/lockDown.mp3">');
             lockDownHTML5.append('<source src="/snd/lockDown.wav">');
+
+            dennisMusicHTML5.append('<source src="/snd/dennisMusic.ogg">');
+            dennisMusicHTML5.append('<source src="/snd/dennisMusic.mp3">');
+            dennisMusicHTML5.append('<source src="/snd/dennisMusic.wav">');
 
             env.sounds.beep = {
                play: function() {
@@ -64,6 +69,16 @@
                play: function() {
                   lockDownHTML5[0].load();
                   lockDownHTML5[0].play();
+               }
+            };
+
+            env.sounds.dennisMusic = {
+               play: function() {
+                  dennisMusicHTML5[0].load();
+                  dennisMusicHTML5[0].play();
+               },
+               stop: function() {
+                  dennisMusicHTML5[0].pause();
                }
             };
          }  else {
@@ -81,6 +96,15 @@
                      autoLoad: true,
                      url: '/snd/lockDown.mp3'
                   });
+
+                  env.sounds.dennisMusic = sm.createSound({
+                     id: 'dennisMusic',
+                     autoLoad: true,
+                     url: '/snd/dennisMusic.mp3',
+                     onfinish: function() {
+                        sm.play('dennisMusic');
+                     }
+                  });
                }
             });
          }
@@ -89,10 +113,27 @@
       return api;
    }());
 
-   JPTERMINAL.init();
-   JPTERMINAL.activeTerminal('main-terminal');
+   jpTerminal.init();
+   jpTerminal.activeTerminal('main-terminal');
 
-   JPTERMINAL.addCommand('access', function(env, inputLine) {
+   jpTerminal.addCommand('music', function(env, inputLine) {
+      var args = inputLine.split(/ +/),
+          output = $('<span/>').text('music: must specify state [on|off]');
+
+      if (args.length > 1) {
+         if (args[1].toLowerCase() === 'on') {
+            env.sounds.dennisMusic.play();
+         } else if (args[1].toLowerCase() === 'off') {
+            env.sounds.dennisMusic.stop();
+         } else {
+            $('#main-input').append(output);
+         }
+      } else {
+         $('#main-input').append(output);
+      }
+   });
+
+   jpTerminal.addCommand('access', function(env, inputLine) {
       var output = $('<span/>').text('access: PERMISSION DENIED'),
           arg = inputLine.split(/ +/)[1] || '',
           magicWord = inputLine.trim().substring(inputLine.lastIndexOf(' '));
@@ -161,7 +202,7 @@
       }
    });
 
-   JPTERMINAL.addCommand('system', function(env, inputLine) {
+   jpTerminal.addCommand('system', function(env, inputLine) {
       var arg = inputLine.split(/ +/)[1] || '',
           output = '<span>system: must specify target system</span>';
 
@@ -191,11 +232,11 @@
       }
    });
 
-   JPTERMINAL.addCommand('ls', function(env, inputLine) {
+   jpTerminal.addCommand('ls', function(env, inputLine) {
       $('#main-input').append($('<div>zebraGirl.jpg</div>'));
    });
 
-   JPTERMINAL.addCommand('display', function(env, inputLine) {
+   jpTerminal.addCommand('display', function(env, inputLine) {
       var args = inputLine.trim().split(' ');
 
       if (args.length < 2) {
@@ -213,7 +254,7 @@
       }
    });
 
-   JPTERMINAL.addCommand('help', function(env, inputLine) {
+   jpTerminal.addCommand('help', function(env, inputLine) {
       Object.keys(env.commands).sort().forEach(function(command) {
          $('#' + env.active).find('.command-history').append($('<div>' + command + '</div>'));
       });
@@ -285,11 +326,17 @@
 
       $('.irix-window').mousedown(function() {
          blurAllWindows();
-         var activeId = JPTERMINAL.activeTerminal($(this).attr('id')),
+         var activeId = jpTerminal.activeTerminal($(this).attr('id')),
              activeTerminal = $('#' + activeId),
-             maxIndex = JPTERMINAL.nextIndex();
+             maxIndex = jpTerminal.nextIndex(),
+             buffer = activeTerminal.find('.buffer');
 
-         activeTerminal.find('.buffer').focus();
+         if (buffer.length) {
+            buffer.focus();
+         } else {
+            $('.buffer').blur();
+         }
+
          $(this).css('z-index', maxIndex);
          activeTerminal.find('.cursor').addClass('active-cursor');
       });
@@ -302,7 +349,7 @@
 
       $('.irix-window').keydown(function(e) {
          var key = e.keyCode || e.which,
-             activeId = JPTERMINAL.activeTerminal(),
+             activeId = jpTerminal.activeTerminal(),
              activeTerminal = $('#' + activeId),
              innerWrap = activeTerminal.find('.inner-wrap');
 
@@ -316,7 +363,7 @@
                activeTerminal.find('.command-history').append($('<div class="entered-command"/>').text(line || ' '));
             } else {
                $('#curr-main-input').html('');
-               JPTERMINAL.buildCommandLine(line);
+               jpTerminal.buildCommandLine(line);
             }
          }
 
