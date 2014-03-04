@@ -221,7 +221,7 @@
 
          $('#main-prompt').addClass('hide');
          $('#main-input').append($(output));
-         output = '<div>System hault!</div>';
+         output = '<div>System Halt!</div>';
          env.sounds.beep.play();
 
          setTimeout(function() {
