@@ -1,38 +1,27 @@
-// Jurassic Systems v0.1.0
-// Tully Robinson (1/1/2014)
 (function($, sm) {
-   var jpTerminal = (function() {
+   var system = (function() {
       var env = {
-             active: null,
-             accessAttempts: 0,
+             activeWindow: null,
              maxIndex: 1,
-             commands: {},
              sounds: {}
           },
           api = {};
 
-      api.buildCommandLine = function(line) {
-         var commandName = line.trim().split(/ /)[0],
-             command = env.commands[commandName];
-
-         $('#' + env.active).find('.command-history').append($('<div class="entered-command"/>').text('> ' + line));
-
-         if (command) {
-            command(env, line);
-         } else if (commandName) {
-            $('#' + env.active).find('.command-history').append($('<div/>').text(commandName + ': command not found'));
+      api.playSound = function(name) {
+         if (env.sounds.hasOwnProperty(name)) {
+            env.sounds[name].play();
          }
       }
 
-      api.addCommand = function(name, command) {
-         if (name && !env.commands.hasOwnProperty(name) && (command.constructor = Function)) {
-            env.commands[name] = command;
+      api.stopSound = function(name) {
+         if (env.sounds.hasOwnProperty(name)) {
+            env.sounds[name].stop();
          }
       }
-
-      api.activeTerminal = function(active) {
-         env.active = active || env.active;
-         return env.active;
+      
+      api.activeWindow = function(activeWindow) {
+         env.activeWindow = activeWindow || env.activeWindow;
+         return env.activeWindow;
       }
 
       api.nextIndex = function() {
@@ -44,7 +33,7 @@
          if (Modernizr.audio.mp3 || Modernizr.audio.wav || Modernizr.audio.ogg) {
             var beepHTML5 = $('<audio preload="auto"/>'),
                 lockDownHTML5 = $('<audio preload="auto"/>'),
-                dennisMusicHTML5 = $('<audio preload="auto"/>');
+                dennisMusicHTML5 = $('<audio loop preload="auto"/>');
 
             beepHTML5.append('<source src="/snd/beep.ogg">');
             beepHTML5.append('<source src="/snd/beep.mp3">');
@@ -88,7 +77,7 @@
                   env.sounds.beep = sm.createSound({
                      id: 'beep',
                      autoLoad: true,
-                  url: '/snd/beep.mp3'
+                     url: '/snd/beep.mp3'
                   });
 
                   env.sounds.lockDown = sm.createSound({
@@ -113,18 +102,47 @@
       return api;
    }());
 
-   jpTerminal.init();
-   jpTerminal.activeTerminal('main-terminal');
+   var terminalManager = (function() {
+      var env = {
+             accessAttempts: 0,
+             commands: {},
+          },
+          api = {};
 
-   jpTerminal.addCommand('music', function(env, inputLine) {
+      api.buildCommandLine = function(line) {
+         var commandName = line.trim().split(/ /)[0],
+             command = env.commands[commandName];
+
+         $('#' + system.activeWindow()).find('.command-history').append($('<div class="entered-command"/>').text('> ' + line));
+
+         if (command) {
+            command(env, line);
+         } else if (commandName) {
+            $('#' + system.activeWindow()).find('.command-history').append($('<div/>').text(commandName + ': command not found'));
+         }
+      }
+
+      api.addCommand = function(name, command) {
+         if (name && !env.commands.hasOwnProperty(name) && (command.constructor = Function)) {
+            env.commands[name] = command;
+         }
+      }
+
+      return api;
+   }());
+
+   system.init();
+   system.activeWindow('main-terminal');
+
+   terminalManager.addCommand('music', function(env, inputLine) {
       var args = inputLine.split(/ +/),
           output = $('<span/>').text('music: must specify state [on|off]');
 
       if (args.length > 1) {
          if (args[1].toLowerCase() === 'on') {
-            env.sounds.dennisMusic.play();
+            system.playSound('dennisMusic');
          } else if (args[1].toLowerCase() === 'off') {
-            env.sounds.dennisMusic.stop();
+            system.stopSound('dennisMusic');
          } else {
             $('#main-input').append(output);
          }
@@ -133,7 +151,7 @@
       }
    });
 
-   jpTerminal.addCommand('access', function(env, inputLine) {
+   terminalManager.addCommand('access', function(env, inputLine) {
       var output = $('<span/>').text('access: PERMISSION DENIED'),
           arg = inputLine.split(/ +/)[1] || '',
           magicWord = inputLine.trim().substring(inputLine.lastIndexOf(' '));
@@ -145,14 +163,14 @@
       } else if (inputLine.split(' ').length > 2 && magicWord.trim() === 'please') {
          $('#main-input').append($('<img id="asciiNewman" src="/img/asciiNewman.jpg" />'));
          $('#asciiNewman').load(function() {
-            $('#' + env.active + ' .inner-wrap').scrollTop($('#' + env.active + ' .inner-wrap')[0].scrollHeight);
+            $('#' + system.activeWindow() + ' .inner-wrap').scrollTop($('#' + system.activeWindow() + ' .inner-wrap')[0].scrollHeight);
          });
 
          return;
       }
 
       $('#main-input').append(output);
-      env.sounds.beep.play();
+      system.playSound('beep');
 
       if (++env.accessAttempts >= 3) {
          var andMessage = $('<span/>').text('...and....'),
@@ -166,7 +184,7 @@
          }, 200);
 
          setTimeout(function() {
-            env.sounds.lockDown.play();
+            system.playSound('lockDown');
          }, 1000);
 
          setTimeout(function() {
@@ -202,7 +220,7 @@
       }
    });
 
-   jpTerminal.addCommand('system', function(env, inputLine) {
+   terminalManager.addCommand('system', function(env, inputLine) {
       var arg = inputLine.split(/ +/)[1] || '',
           output = '<span>system: must specify target system</span>';
 
@@ -219,12 +237,12 @@
          $('#main-prompt').addClass('hide');
          $('#main-input').append($(output));
          output = '<div>System hault!</div>';
-         env.sounds.beep.play();
+         system.playSound('beep');
 
          setTimeout(function() {
-            env.sounds.beep.play();
+            system.playSound('beep');
             $('#main-input').append($(output));
-            $('#' + env.active + ' .inner-wrap').scrollTop($('#' + env.active + ' .inner-wrap')[0].scrollHeight);
+            $('#' + system.activeWindow() + ' .inner-wrap').scrollTop($('#' + system.activeWindow() + ' .inner-wrap')[0].scrollHeight);
             $('#main-prompt').removeClass('hide');
          }, 900);
       } else {
@@ -232,11 +250,11 @@
       }
    });
 
-   jpTerminal.addCommand('ls', function(env, inputLine) {
+   terminalManager.addCommand('ls', function(env, inputLine) {
       $('#main-input').append($('<div>zebraGirl.jpg</div>'));
    });
 
-   jpTerminal.addCommand('display', function(env, inputLine) {
+   terminalManager.addCommand('display', function(env, inputLine) {
       var args = inputLine.trim().split(' ');
 
       if (args.length < 2) {
@@ -246,7 +264,7 @@
 
       if (inputLine.match(/zebraGirl\.jpg/)) {
          setTimeout(function() {
-            $('#zebra-girl').css('z-index', ++env.maxIndex);
+            $('#zebra-girl').css('z-index', system.nextIndex());
             $('#zebra-girl').show();
             $('#main-buffer').blur();
             blurAllWindows();
@@ -254,9 +272,9 @@
       }
    });
 
-   jpTerminal.addCommand('help', function(env, inputLine) {
+   terminalManager.addCommand('help', function(env, inputLine) {
       Object.keys(env.commands).sort().forEach(function(command) {
-         $('#' + env.active).find('.command-history').append($('<div>' + command + '</div>'));
+         $('#' + system.activeWindow()).find('.command-history').append($('<div>' + command + '</div>'));
       });
    });
 
@@ -326,9 +344,9 @@
 
       $('.irix-window').mousedown(function() {
          blurAllWindows();
-         var activeId = jpTerminal.activeTerminal($(this).attr('id')),
+         var activeId = system.activeWindow($(this).attr('id')),
              activeTerminal = $('#' + activeId),
-             maxIndex = jpTerminal.nextIndex(),
+             maxIndex = system.nextIndex(),
              buffer = activeTerminal.find('.buffer');
 
          if (buffer.length) {
@@ -349,7 +367,7 @@
 
       $('.irix-window').keydown(function(e) {
          var key = e.keyCode || e.which,
-             activeId = jpTerminal.activeTerminal(),
+             activeId = system.activeWindow(),
              activeTerminal = $('#' + activeId),
              innerWrap = activeTerminal.find('.inner-wrap');
 
@@ -363,7 +381,7 @@
                activeTerminal.find('.command-history').append($('<div class="entered-command"/>').text(line || ' '));
             } else {
                $('#curr-main-input').html('');
-               jpTerminal.buildCommandLine(line);
+               terminalManager.buildCommandLine(line);
             }
          }
 
