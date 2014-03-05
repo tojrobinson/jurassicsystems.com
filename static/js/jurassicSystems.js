@@ -120,10 +120,12 @@
    jpTerminal.activeTerminal('main-terminal');
 
    jpTerminal.addCommand('music', function(env, inputLine) {
-      var arg = inputLine.split(/ +/)[1] || '',
+      var arg = inputLine.trim().split(/ +/)[1] || '',
           output = $('<span/>').text('music: must specify state [on|off]');
 
-      if (arg) {
+      if (!arg || !arg.match(/^(?:on|off)$/i)) {
+         $('#main-input').append(output);
+      } else {
          if (arg.toLowerCase() === 'on') {
             if (!env.musicOn) {
                env.sounds.dennisMusic.play();
@@ -132,11 +134,7 @@
          } else if (arg.toLowerCase() === 'off') {
             env.sounds.dennisMusic.stop();
             env.musicOn = false;
-         } else {
-            $('#main-input').append(output);
          }
-      } else {
-         $('#main-input').append(output);
       }
    });
 
@@ -145,11 +143,11 @@
           arg = inputLine.split(/ +/)[1] || '',
           magicWord = inputLine.trim().substring(inputLine.lastIndexOf(' '));
 
-      if (arg === '') {
-         $('#main-input').append($('<span/>').text('access: must specify target system'));
+   if (arg === '') {
+      $('#main-input').append($('<span/>').text('access: must specify target system'));
 
-         return;
-      } else if (inputLine.split(' ').length > 2 && magicWord.trim() === 'please') {
+      return;
+   } else if (inputLine.split(' ').length > 2 && magicWord.trim() === 'please') {
          $('#main-input').append($('<img id="asciiNewman" src="/img/asciiNewman.jpg" />'));
          $('#asciiNewman').load(function() {
             $('#' + env.active + ' .inner-wrap').scrollTop($('#' + env.active + ' .inner-wrap')[0].scrollHeight);
