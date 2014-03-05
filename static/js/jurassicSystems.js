@@ -24,7 +24,7 @@
       }
 
       api.addCommand = function(name, command) {
-         if (name && !env.commands.hasOwnProperty(name) && (command.constructor = Function)) {
+         if (name && !env.commands.hasOwnProperty(name) && (command.constructor === Function)) {
             env.commands[name] = command;
          }
       }
