@@ -145,7 +145,7 @@
 
    jpTerminal.addCommand({
          name: 'access',
-         summary: 'access - access a target environment on the Jurassic Systems grid',
+         summary: 'access a target environment on the Jurassic Systems grid',
          manPage: 'SYNOPSIS\n   access [SYSTEM_NAME]',
          command: function(env, inputLine) {
          var output = $('<span/>').text('access: PERMISSION DENIED'),
@@ -219,7 +219,7 @@
 
    jpTerminal.addCommand({
          name: 'system',
-         summary: 'system - check a system\'s current status',
+         summary: 'check a system\'s current status',
          manPage: 'SYNOPSIS\n' +
                   '   system [SYSTEM_NAME]\n' +
                   'DESCRIPTION\n' +
@@ -259,7 +259,7 @@
 
    jpTerminal.addCommand({
          name: 'ls',
-         summary: 'ls - list files in the current directory',
+         summary: 'list files in the current directory',
          manPage: 'SYNOPSIS\n   ls [FILE]',
          command: function(env, inputLine) {
          $('#main-input').append($('<div>zebraGirl.jpg</div>'));
@@ -268,7 +268,7 @@
 
    jpTerminal.addCommand({
          name: 'display',
-         summary: 'display - display image files. (hint: use ls to find a \'file\')',
+         summary: 'display image files. (hint: use ls to find a \'file\')',
          manPage: 'SYNOPSIS\n   display [FILE]',
          command: function(env, inputLine) {
          var args = inputLine.trim().split(' ');
@@ -291,7 +291,7 @@
 
    jpTerminal.addCommand({
       name: 'man',
-      summary: 'man - display reference manual for a given command',
+      summary: 'display reference manual for a given command',
       manPage: 'SYNOPSIS\n   man [COMMAND_NAME]',
       command: function(env, inputLine) {
          var arg = inputLine.trim().split(/ +/)[1] || '',
@@ -309,7 +309,7 @@
 
     jpTerminal.addCommand({
         name: 'clear',
-        summary: 'clear - clear the terminal screen',
+        summary: 'clear the terminal screen',
         manPage: 'SYNOPSIS\n   clear\nDESCRIPTION\n   clear clears your screen if this is possible.',
         command: function(env, inputLine) {
             //$('.console-preabmle').html('');
@@ -324,7 +324,9 @@
          manPage: '',
          command: function(env, inputLine) {
             for (var command in env.commands) {
-               $('#' + env.active).find('.command-history').append($('<div>' + env.commands[command].summary + '</div>'));
+                if (env.commands[command].name != 'help') {
+                    $('#' + env.active).find('.command-history').append($('<div>' + env.commands[command].name + ' \t - ' + env.commands[command].summary + '</div>'));
+                }
             }
       }
    });
