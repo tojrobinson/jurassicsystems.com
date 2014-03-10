@@ -85,7 +85,7 @@
                env.sounds.dennisMusic.play();
             });
          }  else {
-            sm.setup({ 
+            sm.setup({
                url: '/swf/soundManager/',
                onready: function() {
                   env.sounds.beep = sm.createSound({
@@ -144,7 +144,7 @@
    });
 
    jpTerminal.addCommand({
-         name: 'access', 
+         name: 'access',
          summary: 'access - access a target environment on the Jurassic Systems grid',
          manPage: 'SYNOPSIS\n   access [SYSTEM_NAME]',
          command: function(env, inputLine) {
@@ -184,8 +184,8 @@
             }, 1000);
 
             setTimeout(function() {
-               $('#environment').animate({'left': '+=3000'}, 
-                  2000, 
+               $('#environment').animate({'left': '+=3000'},
+                  2000,
                   function() {
                      setTimeout(function() {
                         $('#irix-desktop').hide();
@@ -232,7 +232,7 @@
             arg = arg.replace(/s$/, '');
             arg = arg[0].toUpperCase() + arg.slice(1);
             arg = $('<div/>').text(arg).html();
-            
+
             output = '<div>' + arg + ' containment enclosure....</div>' +
                      '<table id="system-output"><tbody>' +
                      '<tr><td>Security</td><td>[OK]</td></tr>' +
@@ -307,8 +307,19 @@
       }
    });
 
+    jpTerminal.addCommand({
+        name: 'clear',
+        summary: 'clear - clear the terminal screen',
+        manPage: 'SYNOPSIS\n   clear\nDESCRIPTION\n   clear clears your screen if this is possible.',
+        command: function(env, inputLine) {
+            //$('.console-preabmle').html('');
+            $('#main-prompt').html('>');
+            $('#main-input').html('');
+        }
+    });
+
    jpTerminal.addCommand({
-         name: 'help', 
+         name: 'help',
          summary: '',
          manPage: '',
          command: function(env, inputLine) {
