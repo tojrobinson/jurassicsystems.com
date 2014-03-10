@@ -122,7 +122,7 @@
    jpTerminal.addCommand({
       name: 'music',
       summary: 'music - turn background music on or off',
-      manPage: '',
+      manPage: 'SYNOPSIS\n   music [on|off]',
       command: function(env, inputLine) {
          var arg = inputLine.trim().split(/ +/)[1] || '',
              output = $('<span/>').text('music: must specify state [on|off]');
@@ -146,7 +146,7 @@
    jpTerminal.addCommand({
          name: 'access', 
          summary: 'access - access a target environment on the Jurassic Systems grid',
-         manPage: 'USAGE\n   access [system name]',
+         manPage: 'SYNOPSIS\n   access [SYSTEM_NAME]',
          command: function(env, inputLine) {
          var output = $('<span/>').text('access: PERMISSION DENIED'),
              arg = inputLine.split(/ +/)[1] || '',
@@ -220,7 +220,10 @@
    jpTerminal.addCommand({
          name: 'system',
          summary: 'system - check a system\'s current status',
-         manPage: '',
+         manPage: 'SYNOPSIS\n' +
+                  '   system [SYSTEM_NAME]\n' +
+                  'DESCRIPTION\n' +
+                  '   system scans the input system and establishes each sector\'s current status.',
          command: function(env, inputLine) {
          var arg = inputLine.split(/ +/)[1] || '',
              output = '<span>system: must specify target system</span>';
@@ -256,8 +259,8 @@
 
    jpTerminal.addCommand({
          name: 'ls',
-         summary: 'list - list files in the current directory',
-         manPage: '',
+         summary: 'ls - list files in the current directory',
+         manPage: 'SYNOPSIS\n   ls [FILE]',
          command: function(env, inputLine) {
          $('#main-input').append($('<div>zebraGirl.jpg</div>'));
       }
@@ -266,7 +269,7 @@
    jpTerminal.addCommand({
          name: 'display',
          summary: 'display - display image files. (hint: use ls to find a \'file\')',
-         manPage: '',
+         manPage: 'SYNOPSIS\n   display [FILE]',
          command: function(env, inputLine) {
          var args = inputLine.trim().split(' ');
 
@@ -289,7 +292,7 @@
    jpTerminal.addCommand({
       name: 'man',
       summary: 'man - display reference manual for a given command',
-      manPage: 'USAGE\n   man [command name]',
+      manPage: 'SYNOPSIS\n   man [COMMAND_NAME]',
       command: function(env, inputLine) {
          var arg = inputLine.trim().split(/ +/)[1] || '',
              output = 'What manual page do you want?';
