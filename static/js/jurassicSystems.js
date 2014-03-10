@@ -85,7 +85,7 @@
                env.sounds.dennisMusic.play();
             });
          }  else {
-            sm.setup({ 
+            sm.setup({
                url: '/swf/soundManager/',
                onready: function() {
                   env.sounds.beep = sm.createSound({
@@ -144,8 +144,8 @@
    });
 
    jpTerminal.addCommand({
-         name: 'access', 
-         summary: 'access - access a target environment on the Jurassic Systems grid',
+         name: 'access',
+         summary: 'access a target environment on the Jurassic Systems grid',
          manPage: 'SYNOPSIS\n   access [SYSTEM_NAME]',
          command: function(env, inputLine) {
          var output = $('<span/>').text('access: PERMISSION DENIED'),
@@ -184,8 +184,8 @@
             }, 1000);
 
             setTimeout(function() {
-               $('#environment').animate({'left': '+=3000'}, 
-                  2000, 
+               $('#environment').animate({'left': '+=3000'},
+                  2000,
                   function() {
                      setTimeout(function() {
                         $('#irix-desktop').hide();
@@ -219,7 +219,7 @@
 
    jpTerminal.addCommand({
          name: 'system',
-         summary: 'system - check a system\'s current status',
+         summary: 'check a system\'s current status',
          manPage: 'SYNOPSIS\n' +
                   '   system [SYSTEM_NAME]\n' +
                   'DESCRIPTION\n' +
@@ -232,7 +232,7 @@
             arg = arg.replace(/s$/, '');
             arg = arg[0].toUpperCase() + arg.slice(1);
             arg = $('<div/>').text(arg).html();
-            
+
             output = '<div>' + arg + ' containment enclosure....</div>' +
                      '<table id="system-output"><tbody>' +
                      '<tr><td>Security</td><td>[OK]</td></tr>' +
@@ -259,7 +259,7 @@
 
    jpTerminal.addCommand({
          name: 'ls',
-         summary: 'ls - list files in the current directory',
+         summary: 'list files in the current directory',
          manPage: 'SYNOPSIS\n   ls [FILE]',
          command: function(env, inputLine) {
          $('#main-input').append($('<div>zebraGirl.jpg</div>'));
@@ -268,7 +268,7 @@
 
    jpTerminal.addCommand({
          name: 'display',
-         summary: 'display - display image files. (hint: use ls to find a \'file\')',
+         summary: 'display image files. (hint: use ls to find a \'file\')',
          manPage: 'SYNOPSIS\n   display [FILE]',
          command: function(env, inputLine) {
          var args = inputLine.trim().split(' ');
@@ -291,7 +291,7 @@
 
    jpTerminal.addCommand({
       name: 'man',
-      summary: 'man - display reference manual for a given command',
+      summary: 'display reference manual for a given command',
       manPage: 'SYNOPSIS\n   man [COMMAND_NAME]',
       command: function(env, inputLine) {
          var arg = inputLine.trim().split(/ +/)[1] || '',
@@ -307,13 +307,26 @@
       }
    });
 
+    jpTerminal.addCommand({
+        name: 'clear',
+        summary: 'clear the terminal screen',
+        manPage: 'SYNOPSIS\n   clear\nDESCRIPTION\n   clear clears your screen if this is possible.',
+        command: function(env, inputLine) {
+            //$('.console-preabmle').html('');
+            $('#main-prompt').html('>');
+            $('#main-input').html('');
+        }
+    });
+
    jpTerminal.addCommand({
-         name: 'help', 
+         name: 'help',
          summary: '',
          manPage: '',
          command: function(env, inputLine) {
             for (var command in env.commands) {
-               $('#' + env.active).find('.command-history').append($('<div>' + env.commands[command].summary + '</div>'));
+                if (env.commands[command].name != 'help') {
+                    $('#' + env.active).find('.command-history').append($('<div>' + env.commands[command].name + ' \t - ' + env.commands[command].summary + '</div>'));
+                }
             }
       }
    });
