@@ -85,7 +85,7 @@
                env.sounds.dennisMusic.play();
             });
          }  else {
-            sm.setup({ 
+            sm.setup({
                url: '/swf/soundManager/',
                onready: function() {
                   env.sounds.beep = sm.createSound({
@@ -175,8 +175,8 @@
          }, 1000);
 
          setTimeout(function() {
-            $('#environment').animate({'left': '+=3000'}, 
-               2000, 
+            $('#environment').animate({'left': '+=3000'},
+               2000,
                function() {
                   setTimeout(function() {
                      $('#irix-desktop').hide();
@@ -215,7 +215,7 @@
          arg = arg.replace(/s$/, '');
          arg = arg[0].toUpperCase() + arg.slice(1);
          arg = $('<div/>').text(arg).html();
-         
+
          output = '<div>' + arg + ' containment enclosure....</div>' +
                   '<table id="system-output"><tbody>' +
                   '<tr><td>Security</td><td>[OK]</td></tr>' +
@@ -260,6 +260,42 @@
          }, 300);
       }
    });
+
+    jpTerminal.addCommand('man', function(env, inputLine) {
+        var output,
+            arg = inputLine.trim().split(' ')[1] || '';
+
+        if ( arg === '' ) {
+            $('#main-input').append($('<span/>').text('What manual page do you want?'));
+            return;
+        }
+
+        switch ( arg ) {
+            case 'access':
+                output = 'Access a target environment on the Jurassic Systems grid.';
+            break;
+            case 'system':
+                output = 'Check a system\'s current status.';
+            break;
+            case 'ls':
+                output = 'List files in the current directory.';
+            break;
+            case 'display':
+                output = 'Display image files. (hint: use ls to find a \'file\')';
+            break;
+            case 'music':
+                output = 'Turn background music on or off.';
+            break;
+            case 'help':
+                output = 'List all available commands.';
+            break;
+            default:
+                output = 'No manual entry for ' + inputLine.split(/ + /)[1];
+        }
+
+        $('#main-input').append($('<span/>').text(output));
+        return;
+    });
 
    jpTerminal.addCommand('help', function(env, inputLine) {
       Object.keys(env.commands).sort().forEach(function(command) {
