@@ -161,6 +161,8 @@ body {
 
 .command-history, .command-input, .entered-command {
    white-space: pre;
+   white-space: pre-wrap;
+   white-space: -moz-pre-wrap;
 }
 
 #chess-terminal {

@@ -121,7 +121,7 @@
 
    jpTerminal.addCommand({
       name: 'music',
-      summary: 'music - turn background music on or off',
+      summary: 'turn background music on or off',
       manPage: 'SYNOPSIS\n   music [on|off]',
       command: function(env, inputLine) {
          var arg = inputLine.trim().split(/ +/)[1] || '',
@@ -145,7 +145,7 @@
 
    jpTerminal.addCommand({
          name: 'access', 
-         summary: 'access - access a target environment on the Jurassic Systems grid',
+         summary: 'access a target environment on the Jurassic Systems grid',
          manPage: 'SYNOPSIS\n   access [SYSTEM_NAME]',
          command: function(env, inputLine) {
          var output = $('<span/>').text('access: PERMISSION DENIED'),
@@ -219,7 +219,7 @@
 
    jpTerminal.addCommand({
          name: 'system',
-         summary: 'system - check a system\'s current status',
+         summary: 'check a system\'s current status',
          manPage: 'SYNOPSIS\n' +
                   '   system [SYSTEM_NAME]\n' +
                   'DESCRIPTION\n' +
@@ -259,7 +259,7 @@
 
    jpTerminal.addCommand({
          name: 'ls',
-         summary: 'ls - list files in the current directory',
+         summary: 'list files in the current directory',
          manPage: 'SYNOPSIS\n   ls [FILE]',
          command: function(env, inputLine) {
          $('#main-input').append($('<div>zebraGirl.jpg</div>'));
@@ -268,7 +268,7 @@
 
    jpTerminal.addCommand({
          name: 'display',
-         summary: 'display - display image files (hint: use ls to find a \'file\')',
+         summary: 'display image files (hint: use ls to find a \'file\')',
          manPage: 'SYNOPSIS\n   display [FILE]',
          command: function(env, inputLine) {
          var args = inputLine.trim().split(' ');
@@ -290,8 +290,31 @@
    });
 
    jpTerminal.addCommand({
+      name: 'keychecks',
+      summary: 'display system level command history',
+      manPage: '',
+      command: function(env, inputLine) {
+         var output = '13,42,121,32,88,77,19,13,44,52,77,90,13,99,13,100,13,109,55,103,144,13,99,87,60,13,44,12,09,13,43,63,13,46,57,89,103,122,13,44,52,88,931,13,21,13,57,98,100,102,103,13,112,13,146,13,13,13,77,67,88,23,13,13\n' +
+            'system\n' +
+            'nedry\n' +
+            'go to command level\n' +
+            'nedry\n' +
+            '040/#xy/67&\n' +
+            'mr goodbytes\n' +
+            'security\n' +
+            'keycheck off\n' +
+            'safety off\n' +
+            'sl off\n' +
+            'security\n' +
+            'whte_rbt.obj\n';
+
+         $('#main-input').append(output);
+      }
+   });
+
+   jpTerminal.addCommand({
       name: 'man',
-      summary: 'man - display reference manual for a given command',
+      summary: 'display reference manual for a given command',
       manPage: 'SYNOPSIS\n   man [COMMAND_NAME]',
       command: function(env, inputLine) {
          var arg = inputLine.trim().split(/ +/)[1] || '',
@@ -309,11 +332,11 @@
 
    jpTerminal.addCommand({
          name: 'help', 
-         summary: '',
+         summary: 'list available commands',
          manPage: '',
          command: function(env, inputLine) {
             for (var command in env.commands) {
-               $('#' + env.active).find('.command-history').append($('<div>' + env.commands[command].summary + '</div>'));
+               $('#' + env.active).find('.command-history').append($('<div>' + env.commands[command].name + ' - ' + env.commands[command].summary + '</div>'));
             }
       }
    });
