@@ -268,7 +268,7 @@
 
    jpTerminal.addCommand({
          name: 'display',
-         summary: 'display - display image files. (hint: use ls to find a \'file\')',
+         summary: 'display - display image files (hint: use ls to find a \'file\')',
          manPage: 'SYNOPSIS\n   display [FILE]',
          command: function(env, inputLine) {
          var args = inputLine.trim().split(' ');

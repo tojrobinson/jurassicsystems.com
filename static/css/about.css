@@ -1,5 +1,19 @@
 body {
    font-family: 'Open Sans';
+   color: #454545;
+}
+
+.twitter-share-button { vertical-align:top }
+
+.credits {
+   display: inline-block;
+   height: 50px;
+   line-height: 105px;
+   vertical-align: bottom;
+}
+
+.social {
+   float: right;
 }
 
 hr {
@@ -93,7 +107,6 @@ td,th {
 
 .text-block {
    text-align: left;
-   color: #454545;
    font-size: 17px;
 }
 
