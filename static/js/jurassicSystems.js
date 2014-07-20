@@ -160,7 +160,7 @@
          command: function(env, inputLine) {
          var output = $('<span/>').text('access: PERMISSION DENIED'),
              arg = inputLine.split(/ +/)[1] || '',
-             magicWord = inputLine.trim().substring(inputLine.lastIndexOf(' '));
+             magicWord = inputLine.substring(inputLine.trim().lastIndexOf(' ')) || '';
 
       if (arg === '') {
          $('#main-input').append($('<span/>').text('access: must specify target system'));
@@ -406,8 +406,7 @@
       $('.mac-window').draggable();
 
       // attempt to cache objects
-      $(['introBackground.png',
-         'theKingBlur.jpg',
+      $(['theKingBlur.jpg',
          'theKingFocus.jpg',
          'macHDBlur.jpg',
          'asciiNewman.jpg',
@@ -425,6 +424,7 @@
          $('#main-buffer').focus();
 
          if (!location.pathname.match(/system/)) {
+            $('#main-buffer').blur();
             $('#intro').show();
             $('#intro').click(function() {
                $(this).fadeOut(1000);
