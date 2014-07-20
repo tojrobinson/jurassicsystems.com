@@ -122,7 +122,12 @@
    jpTerminal.addCommand({
       name: 'music',
       summary: 'turn background music on or off',
-      manPage: 'SYNOPSIS\n   music [on|off]',
+      manPage: 'SYNOPSIS\n' + 
+               '\tmusic [on|off]\n\n' + 
+               'DESCRIPTION\n' + 
+               '\tManage the state of the \'Dennis Steals the Embryo\' music. Use the \'on\' state for\n\tincreased epicness.\n\n' +
+               'AUTHOR\n' +
+               '\tWritten by <a href="http://tojr.org">Tully Robinson</a>.\n',
       command: function(env, inputLine) {
          var arg = inputLine.trim().split(/ +/)[1] || '',
              output = $('<span/>').text('music: must specify state [on|off]');
@@ -146,7 +151,12 @@
    jpTerminal.addCommand({
          name: 'access', 
          summary: 'access a target environment on the Jurassic Systems grid',
-         manPage: 'SYNOPSIS\n   access [SYSTEM_NAME]',
+         manPage: 'SYNOPSIS\n' +
+                  '\taccess [SYSTEM_NAME] [MAGIC_WORD]\n\n' +
+                  'DESCRIPTION\n' + 
+                  '\tGain read and write access to a specified environment.\n\n' +
+                  'AUTHOR\n' +
+                  '\tWritten by Dennis Nedry.\n',
          command: function(env, inputLine) {
          var output = $('<span/>').text('access: PERMISSION DENIED'),
              arg = inputLine.split(/ +/)[1] || '',
@@ -221,9 +231,11 @@
          name: 'system',
          summary: 'check a system\'s current status',
          manPage: 'SYNOPSIS\n' +
-                  '   system [SYSTEM_NAME]\n' +
+                  '\tsystem [SYSTEM_NAME]\n\n' +
                   'DESCRIPTION\n' +
-                  '   system scans the input system and establishes each sector\'s current status.',
+                  '\tCheck the input system and return each sector\'s current status.\n\n' +
+                  'AUTHOR\n' +
+                  '\tWritten by Dennis Nedry.\n',
          command: function(env, inputLine) {
          var arg = inputLine.split(/ +/)[1] || '',
              output = '<span>system: must specify target system</span>';
@@ -260,7 +272,12 @@
    jpTerminal.addCommand({
          name: 'ls',
          summary: 'list files in the current directory',
-         manPage: 'SYNOPSIS\n   ls [FILE]',
+         manPage: 'SYNOPSIS\n' + 
+                  '\tls [FILE] ...\n\n' +
+                  'DESCRIPTION\n' + 
+                  '\tList information about the FILEs (the current directory by default).\n\n' +
+                  'AUTHOR\n' +
+                  '\tWritten by Richard Stallman and David MacKenzie.\n',
          command: function(env, inputLine) {
          $('#main-input').append($('<div>zebraGirl.jpg</div>'));
       }
@@ -269,7 +286,12 @@
    jpTerminal.addCommand({
          name: 'display',
          summary: 'display image files (hint: use ls to find a \'file\')',
-         manPage: 'SYNOPSIS\n   display [FILE]',
+         manPage: 'SYNOPSIS\n' +
+                  '\tdisplay file ...\n' +
+                  'DESCRIPTION\n' +
+                  '\tDisplay is a machine architecture independent image processing and display\n\tprogram. It can <strong>display</strong> an image on any workstation screen running an X server.\n\n' +
+                  'AUTHOR\n' +
+                  '\tJohn Cristy, ImageMagick Studio.\n',
          command: function(env, inputLine) {
          var args = inputLine.trim().split(' ');
 
@@ -292,7 +314,10 @@
    jpTerminal.addCommand({
       name: 'keychecks',
       summary: 'display system level command history',
-      manPage: '',
+      manPage: 'SYNOPSIS\n' +
+               '\tkeychecks\n\n' +
+               'DESCRIPTION\n' +
+               '\tA system level command log used for accountability purposes. keychecks must be\n\tactivated or deactivated via the main board.\n',
       command: function(env, inputLine) {
          var output = '13,42,121,32,88,77,19,13,44,52,77,90,13,99,13,100,13,109,55,103,144,13,99,87,60,13,44,12,09,13,43,63,13,46,57,89,103,122,13,44,52,88,931,13,21,13,57,98,100,102,103,13,112,13,146,13,13,13,77,67,88,23,13,13\n' +
             'system\n' +
@@ -315,7 +340,10 @@
    jpTerminal.addCommand({
       name: 'man',
       summary: 'display reference manual for a given command',
-      manPage: 'SYNOPSIS\n   man [COMMAND_NAME]',
+      manPage: 'SYNOPSIS\n' +
+               '\tman title ...\n\n' +
+               'DESCRIPTION\n' +
+               '\tman locates and prints the titled entries from the on-line reference manuals.\n',
       command: function(env, inputLine) {
          var arg = inputLine.trim().split(/ +/)[1] || '',
              output = 'What manual page do you want?';
@@ -333,7 +361,12 @@
    jpTerminal.addCommand({
          name: 'help', 
          summary: 'list available commands',
-         manPage: '',
+         manPage: 'SYNOPSIS\n' +
+                  '\thelp\n\n' +
+                  'DESCRIPTION\n' +
+                  '\tDisplay a command summary for Jurassic Systems.\n\n' +
+                  'AUTHOR\n' +
+                  '\tWritten by <a href="http://tojr.org">Tully Robinson</a>.\n',
          command: function(env, inputLine) {
             for (var command in env.commands) {
                $('#' + env.active).find('.command-history').append($('<div>' + env.commands[command].name + ' - ' + env.commands[command].summary + '</div>'));

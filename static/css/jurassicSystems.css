@@ -156,7 +156,8 @@ body {
    overflow: hidden;
 }
 
-.irix-window{
+.irix-window a{
+   color: #cccccc;
 }
 
 .command-history, .command-input, .entered-command {
