@@ -22,16 +22,20 @@ body {
    height: 850px;
 }
 
+.view-cover {
+   height: 100%;
+   width: 100%;
+   position: fixed;
+   background: black;
+   opacity: 0.5;
+}
+
 #intro {
    height: 100%;
    width: 100%;
    position: absolute;
    display: none;
-   background: url('/img/introBackground.png');
    z-index: 60000;
-   margin-left: 10px;
-   margin-top: 10px;
-   color: #bbb;
 }
 
 #intro-scene {
@@ -40,8 +44,8 @@ body {
 
 #intro-box {
    position: fixed;
-   top: 170px;
-   left: 278px;
+   top: 180px;
+   left: 280px;
    background: black;
    padding: 20px;
 }
