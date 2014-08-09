@@ -149,24 +149,24 @@
    });
 
    jpTerminal.addCommand({
-         name: 'access', 
-         summary: 'access a target environment on the Jurassic Systems grid',
-         manPage: 'SYNOPSIS\n' +
-                  '\taccess [SYSTEM_NAME] [MAGIC_WORD]\n\n' +
-                  'DESCRIPTION\n' + 
-                  '\tGain read and write access to a specified environment.\n\n' +
-                  'AUTHOR\n' +
-                  '\tWritten by Dennis Nedry.\n',
-         command: function(env, inputLine) {
-         var output = $('<span/>').text('access: PERMISSION DENIED'),
-             arg = inputLine.split(/ +/)[1] || '',
-             magicWord = inputLine.substring(inputLine.trim().lastIndexOf(' ')) || '';
+   name: 'access', 
+      summary: 'access a target environment on the Jurassic Systems grid',
+      manPage: 'SYNOPSIS\n' +
+               '\taccess [SYSTEM_NAME] [MAGIC_WORD]\n\n' +
+               'DESCRIPTION\n' + 
+               '\tGain read and write access to a specified environment.\n\n' +
+               'AUTHOR\n' +
+               '\tWritten by Dennis Nedry.\n',
+      command: function(env, inputLine) {
+          var output = $('<span/>').text('access: PERMISSION DENIED'),
+              arg = inputLine.split(/ +/)[1] || '',
+              magicWord = inputLine.substring(inputLine.trim().lastIndexOf(' ')) || '';
 
-      if (arg === '') {
-         $('#main-input').append($('<span/>').text('access: must specify target system'));
+         if (arg === '') {
+            $('#main-input').append($('<span/>').text('access: must specify target system'));
 
-         return;
-      } else if (inputLine.split(' ').length > 2 && magicWord.trim() === 'please') {
+            return;
+         } else if (inputLine.split(' ').length > 2 && magicWord.trim() === 'please') {
             $('#main-input').append($('<img id="asciiNewman" src="/img/asciiNewman.jpg" />'));
             $('#asciiNewman').load(function() {
                $('#' + env.active + ' .inner-wrap').scrollTop($('#' + env.active + ' .inner-wrap')[0].scrollHeight);
@@ -228,15 +228,15 @@
    });
 
    jpTerminal.addCommand({
-         name: 'system',
-         summary: 'check a system\'s current status',
-         manPage: 'SYNOPSIS\n' +
-                  '\tsystem [SYSTEM_NAME]\n\n' +
-                  'DESCRIPTION\n' +
-                  '\tCheck the input system and return each sector\'s current status.\n\n' +
-                  'AUTHOR\n' +
-                  '\tWritten by Dennis Nedry.\n',
-         command: function(env, inputLine) {
+      name: 'system',
+      summary: 'check a system\'s current status',
+      manPage: 'SYNOPSIS\n' +
+               '\tsystem [SYSTEM_NAME]\n\n' +
+               'DESCRIPTION\n' +
+               '\tCheck the input system and return each sector\'s current status.\n\n' +
+               'AUTHOR\n' +
+               '\tWritten by Dennis Nedry.\n',
+      command: function(env, inputLine) {
          var arg = inputLine.split(/ +/)[1] || '',
              output = '<span>system: must specify target system</span>';
 
@@ -270,29 +270,29 @@
    });
 
    jpTerminal.addCommand({
-         name: 'ls',
-         summary: 'list files in the current directory',
-         manPage: 'SYNOPSIS\n' + 
-                  '\tls [FILE] ...\n\n' +
-                  'DESCRIPTION\n' + 
-                  '\tList information about the FILEs (the current directory by default).\n\n' +
-                  'AUTHOR\n' +
-                  '\tWritten by Richard Stallman and David MacKenzie.\n',
-         command: function(env, inputLine) {
+      name: 'ls',
+      summary: 'list files in the current directory',
+      manPage: 'SYNOPSIS\n' + 
+               '\tls [FILE] ...\n\n' +
+               'DESCRIPTION\n' + 
+               '\tList information about the FILEs (the current directory by default).\n\n' +
+               'AUTHOR\n' +
+               '\tWritten by Richard Stallman and David MacKenzie.\n',
+      command: function(env, inputLine) {
          $('#main-input').append($('<div>zebraGirl.jpg</div>'));
       }
    });
 
    jpTerminal.addCommand({
-         name: 'display',
-         summary: 'display image files (hint: use ls to find a \'file\')',
-         manPage: 'SYNOPSIS\n' +
-                  '\tdisplay file ...\n' +
-                  'DESCRIPTION\n' +
-                  '\tDisplay is a machine architecture independent image processing and display\n\tprogram. It can <strong>display</strong> an image on any workstation screen running an X server.\n\n' +
-                  'AUTHOR\n' +
-                  '\tJohn Cristy, ImageMagick Studio.\n',
-         command: function(env, inputLine) {
+      name: 'display',
+      summary: 'display image files (hint: use ls to find a \'file\')',
+      manPage: 'SYNOPSIS\n' +
+               '\tdisplay file ...\n' +
+               'DESCRIPTION\n' +
+               '\tDisplay is a machine architecture independent image processing and display\n\tprogram. It can <strong>display</strong> an image on any workstation screen running an X server.\n\n' +
+               'AUTHOR\n' +
+               '\tJohn Cristy, ImageMagick Studio.\n',
+      command: function(env, inputLine) {
          var args = inputLine.trim().split(' ');
 
          if (args.length < 2) {
@@ -359,18 +359,18 @@
    });
 
    jpTerminal.addCommand({
-         name: 'help', 
-         summary: 'list available commands',
-         manPage: 'SYNOPSIS\n' +
-                  '\thelp\n\n' +
-                  'DESCRIPTION\n' +
-                  '\tDisplay a command summary for Jurassic Systems.\n\n' +
-                  'AUTHOR\n' +
-                  '\tWritten by <a href="http://tojr.org">Tully Robinson</a>.\n',
-         command: function(env, inputLine) {
-            for (var command in env.commands) {
-               $('#' + env.active).find('.command-history').append($('<div>' + env.commands[command].name + ' - ' + env.commands[command].summary + '</div>'));
-            }
+      name: 'help', 
+      summary: 'list available commands',
+      manPage: 'SYNOPSIS\n' +
+               '\thelp\n\n' +
+               'DESCRIPTION\n' +
+               '\tDisplay a command summary for Jurassic Systems.\n\n' +
+               'AUTHOR\n' +
+               '\tWritten by <a href="http://tojr.org">Tully Robinson</a>.\n',
+      command: function(env, inputLine) {
+         for (var command in env.commands) {
+            $('#' + env.active).find('.command-history').append($('<div>' + env.commands[command].name + ' - ' + env.commands[command].summary + '</div>'));
+         }
       }
    });
 
