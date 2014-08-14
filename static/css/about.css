@@ -94,7 +94,9 @@ td,th {
 }
 
 .container {
-   width: 850px;
+   width: 80%;
+   max-width: 850px;
+   min-width: 350px;
    margin-left: auto;
    margin-right: auto;
    padding: 20px;
@@ -117,6 +119,18 @@ td,th {
 .inline {
    float: left;
    margin: 10px;
+}
+
+#main-banner {
+   width: 70%;
+   max-width: 560px;
+}
+
+#github-banner {
+   position: absolute;
+   left: 0;
+   top: 0;
+   border: none;
 }
 
 #action-frame {

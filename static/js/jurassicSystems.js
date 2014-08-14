@@ -287,7 +287,7 @@
       name: 'display',
       summary: 'display image files (hint: use ls to find a \'file\')',
       manPage: 'SYNOPSIS\n' +
-               '\tdisplay file ...\n' +
+               '\tdisplay file ...\n\n' +
                'DESCRIPTION\n' +
                '\tDisplay is a machine architecture independent image processing and display\n\tprogram. It can <strong>display</strong> an image on any workstation screen running an X server.\n\n' +
                'AUTHOR\n' +
