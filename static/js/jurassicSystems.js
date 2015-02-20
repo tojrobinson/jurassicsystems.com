@@ -188,7 +188,7 @@
          env.sounds.beep.play();
 
          if (++env.accessAttempts >= 3) {
-            var andMessage = $('<span/>').text('...and....');
+            var andMessage = $('<span>').text('...and....');
             var errorSpam;
 
             $('.irix-window').unbind('keydown');
@@ -214,13 +214,11 @@
                         clearInterval(errorSpam);
                      }
 
-                     $('#the-king-window').ready(function() {
-                        $('#mac-hd-window').css('background-image', 'url(/img/macHDBlur.jpg)');
-                        $('#the-king-window').show();
-                        setTimeout(function() {
-                           $('#home-key').css('z-index', '64000');
-                        }, 10000);
-                     });
+                     $('#mac-hd-window').css('background-image', 'url(/img/macHDBlur.jpg)');
+                     $('#the-king-window').show();
+                     setTimeout(function() {
+                        $('#home-key').css('z-index', '64000');
+                     }, 10000);
                   }, 2000);
                });
             }, 4000);
@@ -386,9 +384,9 @@
 
    // helpers
    var flicker = function(altId, interval, duration) {
-      var visible = true,
-          alt = $('#' + altId),
-          flickering = setInterval(function() {
+      var visible = true;
+      var alt = $('#' + altId).show();
+      var flickering = setInterval(function() {
              if (visible) {
                 alt.css('opacity', '1');
              } else {
@@ -401,6 +399,7 @@
       setTimeout(function() {
          clearInterval(flickering);
          alt.css('opacity', '0');
+         alt.hide()
       }, duration);
    }
 
@@ -410,7 +409,7 @@
    }
 
    $(document).ready(function() {
-      // attempt to cache images 
+      // attempt to cache objects
       $(['theKingBlur.jpg',
          'theKingFocus.jpg',
          'macHDBlur.jpg',
@@ -439,6 +438,29 @@
       }, 4500);
 
       $('body').click(blurAllWindows);
+
+      (function() {
+         var diffX = diffY = 0;
+
+         $('.window-bar').mousedown(function(e) {
+            var dragging = $(this).parent()
+                                  .css('z-index', jpTerminal.nextIndex())
+                                  .addClass('dragging');
+            diffY = e.pageY - dragging.offset().top;
+            diffX = e.pageX - dragging.offset().left;
+         });
+
+         $('body').mousemove(function(e) {
+            $('.dragging').offset({
+               top: e.pageY - diffY,
+               left: e.pageX - diffX 
+            });
+         });
+      }());
+
+      $('body').mouseup(function(e) {
+         $('.dragging').removeClass('dragging');
+      });
       
       $('.irix-window').click(function(e) {
          e.stopPropagation();
@@ -495,8 +517,8 @@
          $('#curr-chess-input').text(input);
       });
 
-      $('#apple-desktop').click(function(){
-         if ($(this).attr('id') !== 'the-king-window' && $(this).attr('id') !== 'king-animation') {
+      $('#apple-desktop').click(function(e){
+         if ($(e.target).closest('.mac-window').attr('id') !== 'the-king-window') {
             flicker('the-king-blur', 50, 450);
          }
       });

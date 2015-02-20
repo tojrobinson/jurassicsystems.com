@@ -25,13 +25,14 @@
 <div id="intro">
    <div class="view-cover"></div>
    <div id="intro-box">
-      <iframe id="intro-scene" width="560" height="315" src="http://www.youtube.com/embed/RfiQYRn7fBg?showinfo=0" frameborder="0" allowfullscreen=""></iframe>
+      <iframe id="intro-scene" width="560" height="315" src="https://www.youtube.com/embed/RfiQYRn7fBg?showinfo=0" frameborder="0" allowfullscreen=""></iframe>
       <div id="intro-text">Watch the above scene from Jurassic Park, then hold onto your butts and press continue to launch the recreation. Type <strong>"help"</strong> into the console to see a list of commands.</div><div id="intro-divider"></div><div id="continue-button"><img src="/img/continueButton.png"></div>
    </div>
 </div>
 <div id="environment">
    <div id="irix-desktop">
       <div class="irix-window" id="main-terminal" style="z-index: 2">
+         <div class="window-bar"></div>
          <input type="text" class="buffer" id="main-buffer" autocomplete="off">
          <div class="inner-wrap" id="main-inner">
             <div class="terminal-view">
@@ -48,12 +49,15 @@
       </div>
 
       <div class="irix-window" id="gr-osview">
+         <div class="window-bar"></div>
       </div>
 
       <div class="irix-window" id="zebra-girl">
+         <div class="window-bar"></div>
       </div>
 
       <div class="irix-window" id="chess-terminal" style="z-index: 1">
+         <div class="window-bar"></div>
          <input type="text" class="buffer" id="chess-buffer" autocomplete="off">
          <div class="inner-wrap" id="chess-inner">
             <div class="terminal-view">
@@ -151,9 +155,10 @@
       </div>
    </div>
    <div id="apple-desktop">
-      <div id="mac-hd-window">
+      <div id="mac-hd-window" class="mac-window">
       </div>
       <div id="the-king-window" class="mac-window">
+         <div class="window-bar"></div>
          <div id="the-king-animation">
             <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="440" height="540" id="king-swf" align="middle">
                <param name="movie" value="/swf/theKing.swf"/>
@@ -161,7 +166,7 @@
                <object type="application/x-shockwave-flash" data="/swf/theKing.swf" width="440" height="540">
                   <param name="movie" value="/swf/theKing.swf"/>
                   <!--<![endif]-->
-                  <a href="http://www.adobe.com/go/getflash">
+                  <a href="https://www.adobe.com/go/getflash">
                      <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player"/>
                   </a>
                   <!--[if !IE]>-->

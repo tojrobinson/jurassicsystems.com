@@ -160,8 +160,25 @@ body {
    overflow: hidden;
 }
 
-.irix-window a{
+.irix-window a {
    color: #cccccc;
+}
+
+.irix-window,
+.mac-window {
+   position: relative;
+}
+
+.window-bar {
+   position: absolute;
+   top: 0;
+   left: 0;
+   height: 30px;
+   width: 100%;
+}
+
+.dragging {
+   cursor: move;
 }
 
 .command-history, .command-input, .entered-command {
@@ -247,6 +264,7 @@ body {
    top: 0;
    left: 0;
    opacity: 0;
+   display: none;
 }
 
 #king-animation {
