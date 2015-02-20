@@ -7,19 +7,22 @@
              musicOn: false,
              commands: {},
              sounds: {}
-          },
-          api = {};
+          };
+      var api = {};
 
       api.buildCommandLine = function(line) {
-         var commandName = line.trim().split(/ /)[0],
-             command = env.commands[commandName] && env.commands[commandName].command;
+         var commandName = line.trim().split(/ /)[0];
+         var command = env.commands[commandName] && env.commands[commandName].command;
 
-         $('#' + env.active).find('.command-history').append($('<div class="entered-command"/>').text('> ' + line));
+         env.active.find('.command-history')
+                   .append($('<div class="entered-command">')
+                   .text('> ' + line));
 
          if (command) {
             command(env, line);
          } else if (commandName) {
-            $('#' + env.active).find('.command-history').append($('<div/>').text(commandName + ': command not found'));
+            env.active.find('.command-history')
+                      .append($('<div>').text(commandName + ': command not found'));
          }
       }
 
@@ -29,8 +32,11 @@
          }
       }
 
-      api.activeTerminal = function(active) {
-         env.active = active || env.active;
+      api.setActive = function(active) {
+         env.active = $(active) || env.active;
+      }
+
+      api.getActive = function() {
          return env.active;
       }
 
@@ -41,9 +47,9 @@
       api.init = function() {
          // HTML5 audio element detection
          if (Modernizr.audio.mp3 || Modernizr.audio.wav || Modernizr.audio.ogg) {
-            var beepHTML5 = $('<audio preload="auto"/>'),
-                lockDownHTML5 = $('<audio preload="auto"/>'),
-                dennisMusicHTML5 = $('<audio preload="auto"/>');
+            var beepHTML5 = $('<audio preload="auto"/>');
+            var lockDownHTML5 = $('<audio preload="auto"/>');
+            var dennisMusicHTML5 = $('<audio preload="auto"/>');
 
             beepHTML5.append('<source src="/snd/beep.ogg">');
             beepHTML5.append('<source src="/snd/beep.mp3">');
@@ -117,7 +123,7 @@
    }());
 
    jpTerminal.init();
-   jpTerminal.activeTerminal('main-terminal');
+   jpTerminal.setActive('#main-terminal');
 
    jpTerminal.addCommand({
       name: 'music',
@@ -129,8 +135,8 @@
                'AUTHOR\n' +
                '\tWritten by <a href="http://tojr.org">Tully Robinson</a>.\n',
       command: function(env, inputLine) {
-         var arg = inputLine.trim().split(/ +/)[1] || '',
-             output = $('<span/>').text('music: must specify state [on|off]');
+         var arg = inputLine.trim().split(/ +/)[1] || '';
+         var output = $('<span/>').text('music: must specify state [on|off]');
 
          if (!arg || !arg.match(/^(?:on|off)$/i)) {
             $('#main-input').append(output);
@@ -158,18 +164,21 @@
                'AUTHOR\n' +
                '\tWritten by Dennis Nedry.\n',
       command: function(env, inputLine) {
-          var output = $('<span/>').text('access: PERMISSION DENIED'),
-              arg = inputLine.split(/ +/)[1] || '',
-              magicWord = inputLine.substring(inputLine.trim().lastIndexOf(' ')) || '';
+          var output = $('<span>').text('access: PERMISSION DENIED');
+          var arg = inputLine.split(/ +/)[1] || '';
+          var magicWord = inputLine.substring(inputLine.trim()
+                                   .lastIndexOf(' ')) || '';
 
          if (arg === '') {
-            $('#main-input').append($('<span/>').text('access: must specify target system'));
+            $('#main-input').append($('<span/>')
+                            .text('access: must specify target system'));
 
             return;
          } else if (inputLine.split(' ').length > 2 && magicWord.trim() === 'please') {
             $('#main-input').append($('<img id="asciiNewman" src="/img/asciiNewman.jpg" />'));
             $('#asciiNewman').load(function() {
-               $('#' + env.active + ' .inner-wrap').scrollTop($('#' + env.active + ' .inner-wrap')[0].scrollHeight);
+               var wrap = $('.inner-wrap', env.active);
+               wrap.scrollTop(wrap[0].scrollHeight);
             });
 
             return;
@@ -179,8 +188,8 @@
          env.sounds.beep.play();
 
          if (++env.accessAttempts >= 3) {
-            var andMessage = $('<span/>').text('...and....'),
-                errorSpam;
+            var andMessage = $('<span/>').text('...and....');
+            var errorSpam;
 
             $('.irix-window').unbind('keydown');
             $('#main-prompt').addClass('hide');
@@ -194,26 +203,26 @@
             }, 1000);
 
             setTimeout(function() {
-               $('#environment').animate({'left': '+=3000'}, 
-                  2000, 
-                  function() {
-                     setTimeout(function() {
-                        $('#irix-desktop').hide();
-                        if (errorSpam) {
-                           clearInterval(errorSpam);
-                        }
+               $('#environment').animate({
+                  'left': '+=3000'
+               },
+               2000,
+               function() {
+                  setTimeout(function() {
+                     $('#irix-desktop').hide();
+                     if (errorSpam) {
+                        clearInterval(errorSpam);
+                     }
 
-                        $('#the-king-window').ready(function() {
-                           $('#mac-hd-window').css('background-image', 'url(/img/macHDBlur.jpg)');
-                           $('#the-king-window').show();
-                           if ($(window).width() < 1200) {
-                              setTimeout(function() {
-                                 $('#home-key').css('z-index', '64000');
-                              }, 10000);
-                           }
-                        });
-                     }, 2000);
-                  });
+                     $('#the-king-window').ready(function() {
+                        $('#mac-hd-window').css('background-image', 'url(/img/macHDBlur.jpg)');
+                        $('#the-king-window').show();
+                        setTimeout(function() {
+                           $('#home-key').css('z-index', '64000');
+                        }, 10000);
+                     });
+                  }, 2000);
+               });
             }, 4000);
 
             setTimeout(function() {
@@ -237,8 +246,8 @@
                'AUTHOR\n' +
                '\tWritten by Dennis Nedry.\n',
       command: function(env, inputLine) {
-         var arg = inputLine.split(/ +/)[1] || '',
-             output = '<span>system: must specify target system</span>';
+         var arg = inputLine.split(/ +/)[1] || '';
+         var output = '<span>system: must specify target system</span>';
 
          if (arg.length > 0) {
             arg = arg.replace(/s$/, '');
@@ -248,7 +257,7 @@
             output = '<div>' + arg + ' containment enclosure....</div>' +
                      '<table id="system-output"><tbody>' +
                      '<tr><td>Security</td><td>[OK]</td></tr>' +
-                     '<tr><td>Fence</td><td>[OK]</tr>' +
+                     '<tr><td>Fence</td><td>[OK]</td></tr>' +
                      '<tr><td>Feeding Pavilion</td><td>[OK]</td></tr>' +
                      '</tbody></table>';
 
@@ -258,9 +267,10 @@
             env.sounds.beep.play();
 
             setTimeout(function() {
+               var wrap = $('.inner-wrap', env.active);
                env.sounds.beep.play();
                $('#main-input').append($(output));
-               $('#' + env.active + ' .inner-wrap').scrollTop($('#' + env.active + ' .inner-wrap')[0].scrollHeight);
+               wrap.scrollTop(wrap[0].scrollHeight);
                $('#main-prompt').removeClass('hide');
             }, 900);
          } else {
@@ -304,7 +314,6 @@
             setTimeout(function() {
                $('#zebra-girl').css('z-index', ++env.maxIndex);
                $('#zebra-girl').show();
-               $('#main-buffer').blur();
                blurAllWindows();
             }, 300);
          }
@@ -345,8 +354,8 @@
                'DESCRIPTION\n' +
                '\tman locates and prints the titled entries from the on-line reference manuals.\n',
       command: function(env, inputLine) {
-         var arg = inputLine.trim().split(/ +/)[1] || '',
-             output = 'What manual page do you want?';
+         var arg = inputLine.trim().split(/ +/)[1] || '';
+         var output = 'What manual page do you want?';
 
          if (env.commands.hasOwnProperty(arg)) {
             output = env.commands[arg].manPage;
@@ -369,7 +378,8 @@
                '\tWritten by <a href="http://tojr.org">Tully Robinson</a>.\n',
       command: function(env, inputLine) {
          for (var command in env.commands) {
-            $('#' + env.active).find('.command-history').append($('<div>' + env.commands[command].name + ' - ' + env.commands[command].summary + '</div>'));
+            env.active.find('.command-history')
+                      .append($('<div>').text(env.commands[command].name + ' - ' + env.commands[command].summary));
          }
       }
    });
@@ -395,17 +405,12 @@
    }
 
    var blurAllWindows = function() {
-      $('.irix-window').each(function() {
-         $('#' + $(this).attr('id').split('-')[0] + '-cursor').removeClass('active-cursor');
-      });
+      $('.cursor', '.irix-window').removeClass('active-cursor');
+      $('.buffer').blur();
    }
 
    $(document).ready(function() {
-      // init
-      $('.irix-window').draggable();
-      $('.mac-window').draggable();
-
-      // attempt to cache objects
+      // attempt to cache images 
       $(['theKingBlur.jpg',
          'theKingFocus.jpg',
          'macHDBlur.jpg',
@@ -433,26 +438,17 @@
          }
       }, 4500);
 
-      // listeners
-      $('.buffer').blur(function() {
-         $('#' + $(this).attr('id').split('-')[0] + '-cursor').removeClass('active-cursor');
-      });
-
-      $('.irix-window').mousedown(function() {
+      $('body').click(blurAllWindows);
+      
+      $('.irix-window').click(function(e) {
+         e.stopPropagation();
          blurAllWindows();
-         var activeId = jpTerminal.activeTerminal($(this).attr('id')),
-             activeTerminal = $('#' + activeId),
-             maxIndex = jpTerminal.nextIndex(),
-             buffer = activeTerminal.find('.buffer');
 
-         if (buffer.length) {
-            buffer.focus();
-         } else {
-            $('.buffer').blur();
-         }
+         jpTerminal.setActive(this);
 
-         $(this).css('z-index', maxIndex);
-         activeTerminal.find('.cursor').addClass('active-cursor');
+         $('.buffer', this).focus();
+         $(this).css('z-index', jpTerminal.nextIndex());
+         $(this).find('.cursor').addClass('active-cursor');
       });
 
       $(window).keydown(function(e) {
@@ -462,39 +458,44 @@
       });
 
       $('.irix-window').keydown(function(e) {
-         var key = e.keyCode || e.which,
-             activeId = jpTerminal.activeTerminal(),
-             activeTerminal = $('#' + activeId),
-             innerWrap = activeTerminal.find('.inner-wrap');
+         var key = e.keyCode || e.which;
+         var activeTerminal = jpTerminal.getActive();
+         var wrap = activeTerminal.find('.inner-wrap');
+
+         if (!activeTerminal) {
+            return false;
+         }
 
          // if enter
          if (key === 13) {
             var line = activeTerminal.find('.buffer').val();
             activeTerminal.find('.buffer').val('');
 
-            if (activeId === 'chess-terminal') {
+            if (activeTerminal.attr('id') === 'chess-terminal') {
                $('#curr-chess-input').html('');
-               activeTerminal.find('.command-history').append($('<div class="entered-command"/>').text(line || ' '));
+               activeTerminal.find('.command-history')
+                             .append($('<div class="entered-command">')
+                             .text(line || ' '));
             } else {
                $('#curr-main-input').html('');
                jpTerminal.buildCommandLine(line);
             }
          }
 
-         innerWrap.scrollTop(innerWrap[0].scrollHeight);
+         wrap.scrollTop(wrap[0].scrollHeight);
       });
 
-      $('#main-terminal .buffer').bind('input propertychange', function(e) {
+      $('#main-terminal .buffer').bind('input propertychange', function() {
          var input = $(this).val();
          $('#curr-main-input').text(input);
       });
 
-      $('#chess-terminal .buffer').bind('input propertychange', function(e) {
+      $('#chess-terminal .buffer').bind('input propertychange', function() {
          var input = $(this).val();
          $('#curr-chess-input').text(input);
       });
 
-      $('#apple-desktop').click(function(e){
+      $('#apple-desktop').click(function(){
          if ($(this).attr('id') !== 'the-king-window' && $(this).attr('id') !== 'king-animation') {
             flicker('the-king-blur', 50, 450);
          }
