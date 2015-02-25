@@ -9,7 +9,27 @@
          $('<img />')[0].src = '/img/' + this;
       });
 
-   $('#the-king-window').draggable();
+   (function() {
+      var diffX = diffY = 0;
+
+      $('.window-bar').mousedown(function(e) {
+         var dragging = $(this).parent()
+                               .addClass('dragging');
+         diffY = e.pageY - dragging.offset().top;
+         diffX = e.pageX - dragging.offset().left;
+      });
+
+      $('body').mousemove(function(e) {
+         $('.dragging').offset({
+            top: e.pageY - diffY,
+            left: e.pageX - diffX 
+         });
+      });
+   }());
+
+   $('body').mouseup(function(e) {
+      $('.dragging').removeClass('dragging');
+   });
 
    $('#the-king-window').ready(function() {
       setTimeout(function() {
@@ -45,7 +65,9 @@
    }
 
    $('#apple-desktop').click(function(e){
-      if (e.target.id !== 'the-king-window' && e.target.id !== 'king-animation') {
+      var isKing = $(e.target).closest('#the-king-window').length;
+
+      if (!isKing) {
          flicker('the-king-blur', 50, 450);
       }
    });

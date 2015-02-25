@@ -32,6 +32,7 @@ body {
    height: 850px;
    border-radius: 10px;
 }
+
 #the-king-window {
    display: none;
    background-image: url('/img/theKingFocus.jpg');
@@ -78,4 +79,21 @@ body {
    position: absolute;
    left: 15px;
    top: 100px
+}
+
+.mac-window {
+   position: relative;
+}
+
+.window-bar {
+   position: absolute;
+   top: 0;
+   left: 0;
+   height: 30px;
+   width: 100%;
+   z-index: 1000;
+}
+
+.dragging {
+   cursor: move;
 }
