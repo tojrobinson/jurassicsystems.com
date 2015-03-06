@@ -10,7 +10,8 @@
       });
 
    (function() {
-      var diffX = diffY = 0;
+      var diffX = 0;
+      var diffY = 0;
 
       $('.window-bar').mousedown(function(e) {
          var dragging = $(this).parent()

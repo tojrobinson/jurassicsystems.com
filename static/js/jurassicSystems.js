@@ -440,7 +440,8 @@
       $('body').click(blurAllWindows);
 
       (function() {
-         var diffX = diffY = 0;
+         var diffX = 0;
+         var diffY = 0;
 
          $('.window-bar').mousedown(function(e) {
             var dragging = $(this).parent()
@@ -482,7 +483,6 @@
       $('.irix-window').keydown(function(e) {
          var key = e.keyCode || e.which;
          var activeTerminal = jpTerminal.getActive();
-         var wrap = activeTerminal.find('.inner-wrap');
 
          if (!activeTerminal) {
             return false;
@@ -504,6 +504,7 @@
             }
          }
 
+         var wrap = activeTerminal.find('.inner-wrap');
          wrap.scrollTop(wrap[0].scrollHeight);
       });
 
