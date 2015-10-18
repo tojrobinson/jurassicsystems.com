@@ -133,7 +133,7 @@
                'DESCRIPTION\n' + 
                '\tManage the state of the \'Dennis Steals the Embryo\' music. Use the \'on\' state for\n\tincreased epicness.\n\n' +
                'AUTHOR\n' +
-               '\tWritten by <a href="http://tojr.org">Tully Robinson</a>.\n',
+               '\tWritten by <a href="https://tully.io">Tully Robinson</a>.\n',
       command: function(env, inputLine) {
          var arg = inputLine.trim().split(/ +/)[1] || '';
          var output = $('<span/>').text('music: must specify state [on|off]');
@@ -373,7 +373,7 @@
                'DESCRIPTION\n' +
                '\tDisplay a command summary for Jurassic Systems.\n\n' +
                'AUTHOR\n' +
-               '\tWritten by <a href="http://tojr.org">Tully Robinson</a>.\n',
+               '\tWritten by <a href="https://tully.io">Tully Robinson</a>.\n',
       command: function(env, inputLine) {
          for (var command in env.commands) {
             env.active.find('.command-history')
