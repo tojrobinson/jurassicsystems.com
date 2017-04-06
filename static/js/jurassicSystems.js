@@ -164,7 +164,7 @@
                'AUTHOR\n' +
                '\tWritten by Dennis Nedry.\n',
       command: function(env, inputLine) {
-          var output = $('<span>').text('access: PERMISSION DENIED');
+          var output = $('<span>').text('access: PERMISSION DENIED.');
           var arg = inputLine.split(/ +/)[1] || '';
           var magicWord = inputLine.substring(inputLine.trim()
                                    .lastIndexOf(' ')) || '';
