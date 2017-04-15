@@ -188,7 +188,7 @@
          env.sounds.beep.play();
 
          if (++env.accessAttempts >= 3) {
-            var andMessage = $('<span>').text('...and....');
+            var andMessage = $('<span>').text('...and...');
             var errorSpam;
 
             $('.irix-window').unbind('keydown');
