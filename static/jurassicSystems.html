@@ -159,21 +159,10 @@
       </div>
       <div id="the-king-window" class="mac-window">
          <div class="window-bar"></div>
-         <div id="the-king-animation">
-            <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="440" height="540" id="king-swf" align="middle">
-               <param name="movie" value="/swf/theKing.swf"/>
-               <!--[if !IE]>-->
-               <object type="application/x-shockwave-flash" data="/swf/theKing.swf" width="440" height="540">
-                  <param name="movie" value="/swf/theKing.swf"/>
-                  <!--<![endif]-->
-                  <a href="https://www.adobe.com/go/getflash">
-                     <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player"/>
-                  </a>
-                  <!--[if !IE]>-->
-               </object>
-               <!--<![endif]-->
-            </object>
-         </div>
+         <video height="540" width="540" loop id="the-king-video">
+            <source src="/vid/theKing.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+         </video>
       <div id="the-king-blur"></div>
       </div>
    </div>

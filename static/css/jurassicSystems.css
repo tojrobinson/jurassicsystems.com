@@ -249,11 +249,8 @@ body {
    text-align: center;
 }
 
-#the-king-animation {
-   position: absolute;
-   top: 40px;
-   left: 80px;
-   z-index: 64000;
+#the-king-video {
+  margin-top: 40px;
 }
 
 #the-king-blur {

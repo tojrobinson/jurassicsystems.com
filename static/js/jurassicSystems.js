@@ -214,24 +214,24 @@
         }, 1000);
 
         setTimeout(function() {
-          console.log('animating');
           $('#environment').animate(
             {'left': '+=3000'},
             2000,
             function() {
               setTimeout(function() {
-                $('#irix-desktop').hide();
-                if (errorSpam) {
-                  clearInterval(errorSpam);
-                }
+                const theKingVideo = document.getElementById('the-king-video');
 
+                errorSpam != null && clearInterval(errorSpam);
+                theKingVideo != null && theKingVideo.play();
+                $('#irix-desktop').hide();
                 $('#mac-hd-window').css('background-image', 'url(/img/macHDBlur.jpg)');
                 $('#the-king-window').show();
+
                 setTimeout(function() {
                   $('#home-key').css('z-index', '64000');
                 }, 10000);
               }, 2000);
-            }
+            },
           );
         }, 4000);
 
@@ -446,7 +446,6 @@
       new Image().src = '/img/' + this;
     });
 
-    $.ajax({url: '/swf/theKing.swf'});
 
     // remove boot screen
     setTimeout(function() {
