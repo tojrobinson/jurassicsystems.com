@@ -4,6 +4,11 @@ HTML5/JavaScript recreation of the original Jurassic Park movie computer system.
 ## About Repo
 This project started out as a much smaller joke that got out of hand, so the implementation may not have lead to the most extensible of code bases. That being said, adding terminal commands, at least, should be fairly straight forward using the `addCommand` method in [jurassicSystems.js](https://github.com/tojrobinson/jurassicsystems.com/blob/master/static/js/jurassicSystems.js).
 
+## Make - Docker
+run `make` for helpful make commands for building a Docker container of this app.
+
+
+
 ## License
 The MIT License (MIT)
 
