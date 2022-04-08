@@ -1,12 +1,9 @@
 (function($) {
-   $.ajax({
-      url : '/swf/theKing.swf'
-   });
 
    $(['theKingBlur.jpg',
       'macHDBlur.jpg',
       'macHDFocus.jpg']).each(function() {
-         $('<img />')[0].src = '/img/' + this;
+         $('<img />')[0].src = 'img/' + this;
       });
 
    (function() {
@@ -34,7 +31,10 @@
 
    $('#the-king-window').ready(function() {
       setTimeout(function() {
-         $('#mac-hd-window').css('background-image', 'url(/img/macHDBlur.jpg)');
+const theKingVideo = document.getElementById('the-king-video');
+
+                theKingVideo != null && theKingVideo.play();
+         $('#mac-hd-window').css('background-image', 'url(img/macHDBlur.jpg)');
          $('#the-king-window').show();
 
          if ($(window).width() < 1200) {

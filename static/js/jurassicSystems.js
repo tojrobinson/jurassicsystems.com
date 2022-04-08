@@ -57,17 +57,17 @@
         const lockDownHTML5 = $('<audio preload="auto"/>');
         const dennisMusicHTML5 = $('<audio preload="auto"/>');
 
-        beepHTML5.append('<source src="/snd/beep.ogg">');
-        beepHTML5.append('<source src="/snd/beep.mp3">');
-        beepHTML5.append('<source src="/snd/beep.wav">');
+        beepHTML5.append('<source src="snd/beep.ogg">');
+        beepHTML5.append('<source src="snd/beep.mp3">');
+        beepHTML5.append('<source src="snd/beep.wav">');
 
-        lockDownHTML5.append('<source src="/snd/lockDown.ogg">');
-        lockDownHTML5.append('<source src="/snd/lockDown.mp3">');
-        lockDownHTML5.append('<source src="/snd/lockDown.wav">');
+        lockDownHTML5.append('<source src="snd/lockDown.ogg">');
+        lockDownHTML5.append('<source src="snd/lockDown.mp3">');
+        lockDownHTML5.append('<source src="snd/lockDown.wav">');
 
-        dennisMusicHTML5.append('<source src="/snd/dennisMusic.ogg">');
-        dennisMusicHTML5.append('<source src="/snd/dennisMusic.mp3">');
-        dennisMusicHTML5.append('<source src="/snd/dennisMusic.wav">');
+        dennisMusicHTML5.append('<source src="snd/dennisMusic.ogg">');
+        dennisMusicHTML5.append('<source src="snd/dennisMusic.mp3">');
+        dennisMusicHTML5.append('<source src="snd/dennisMusic.wav">');
 
         env.sounds.beep = {
           play: function() {
@@ -224,7 +224,7 @@
                 errorSpam != null && clearInterval(errorSpam);
                 theKingVideo != null && theKingVideo.play();
                 $('#irix-desktop').hide();
-                $('#mac-hd-window').css('background-image', 'url(/img/macHDBlur.jpg)');
+                $('#mac-hd-window').css('background-image', 'url(img/macHDBlur.jpg)');
                 $('#the-king-window').show();
 
                 setTimeout(function() {
@@ -443,7 +443,7 @@
       'asciiNewman.jpg',
       'zebraGirlWindow.jpg',
     ]).each(function() {
-      new Image().src = '/img/' + this;
+      new Image().src = 'img/' + this;
     });
 
 

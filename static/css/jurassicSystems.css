@@ -118,7 +118,7 @@ body {
 }
 
 #irix-desktop {
-   background-image: url("/img/irixBackground.jpg");
+   background-image: url("../img/irixBackground.jpg");
    background-repeat: no-repeat;
    overflow: hidden;
    margin-left: 10px;
@@ -129,7 +129,7 @@ body {
 }
 
 #apple-desktop {
-   background-image: url("/img/appleBackground.jpg");
+   background-image: url("../img/appleBackground.jpg");
    background-repeat: no-repeat;
    overflow: hidden;
    margin-left: 10px;
@@ -147,7 +147,7 @@ body {
    margin: auto;
    padding-top: 31px;
    padding-left: 30px;
-   background-image: url("/img/mainTerm.jpg");
+   background-image: url("../img/mainTerm.jpg");
    background-repeat: no-repeat;
    position: absolute;
    top: 120px;
@@ -188,7 +188,7 @@ body {
 }
 
 #chess-terminal {
-   background-image: url("/img/chessTerm.jpg");
+   background-image: url("../img/chessTerm.jpg");
    background-repeat: no-repeat;
    padding-top: 31px;
    padding-left: 30px;
@@ -212,7 +212,7 @@ body {
    display: none;
    right: 20px;
    top: 40px;
-   background-image: url("/img/zebraGirlWindow.jpg");
+   background-image: url("../img/zebraGirlWindow.jpg");
 }
 
 .terminal-view {
@@ -228,7 +228,7 @@ body {
 }
 
 #gr-osview {
-   background-image: url('/img/grOsview.gif');
+   background-image: url("../img/grOsview.gif");
    background-repeat: no-repeat;
    height: 369px;
    width: 393px;
@@ -239,7 +239,7 @@ body {
 
 #the-king-window {
    display: none;
-   background-image: url('/img/theKingFocus.jpg');
+   background-image: url("../img/theKingFocus.jpg");
    background-repeat: no-repeat;
    width: 600px;
    height: 620px;
@@ -254,7 +254,7 @@ body {
 }
 
 #the-king-blur {
-   background-image: url('/img/theKingBlur.jpg');
+   background-image: url("../img/theKingBlur.jpg");
    width: 600px;
    height: 620px;
    position: absolute;
@@ -276,7 +276,7 @@ body {
 #mac-hd-window {
    width: 556px;
    height: 566px;
-   background-image: url("/img/macHDFocus.jpg");
+   background-image: url("../img/macHDFocus.jpg");
    background-repeat: no-repeat;
    position: absolute;
    left: 15px;
@@ -333,7 +333,7 @@ input[type="button"], button {-moz-box-sizing: content-box;}
 input[type="button"]::-moz-focus-inner, button::-moz-focus-inner { padding:0;border:0 none; }
 
 .button {
-   background-image:url("/img/buttonOverlay.png");
+   background-image:url("../img/buttonOverlay.png");
    -moz-border-radius:5px;
    -webkit-border-radius:5px;
    border-radius:5px;
