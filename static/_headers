@@ -1,6 +1,3 @@
-/*
-  Access-Control-Allow-Origin: *
-  
 /secure/page
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
