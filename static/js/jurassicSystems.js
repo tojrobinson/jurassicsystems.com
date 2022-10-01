@@ -103,13 +103,13 @@
             env.sounds.beep = sm.createSound({
               autoLoad: true,
               id: 'beep',
-              url: '/snd/beep.mp3',
+              url: '/snd/beep.wav',
             });
 
             env.sounds.lockDown = sm.createSound({
               autoLoad: true,
               id: 'lockDown',
-              url: '/snd/lockDown.mp3',
+              url: '/snd/lockDown.wav',
             });
 
             env.sounds.dennisMusic = sm.createSound({
@@ -118,7 +118,7 @@
               onfinish: function() {
                 sm.play('dennisMusic');
               },
-              url: '/snd/dennisMusic.mp3',
+              url: '/snd/dennisMusic.wav',
             });
           },
         });
