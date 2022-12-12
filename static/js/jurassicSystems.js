@@ -18,7 +18,7 @@
 
       env.active.find('.command-history')
         .append($('<div class="entered-command">')
-        .text('> ' + line));
+        .text(line));
 
       if (command) {
         command(env, line);
@@ -406,6 +406,35 @@
             env.commands[command].summary)
           );
       }
+    }
+  });
+
+  jpTerminal.addCommand({
+    name: 'date',
+    summary: 'display the current date and time',
+    manPage: 'SYNOPSIS\n' + 
+             '\tdate\n\n' +
+             'DESCRIPTION\n' + 
+             '\tDisplay the current date and time.\n\n' +
+             'AUTHOR\n' +
+             '\tWritten by Jason Rones.\n',
+    command: function(env, inputLine) {
+      let output = Date();
+      $('#main-input').append(output);
+    }
+  });
+
+  jpTerminal.addCommand({
+    name: 'clear',
+    summary: 'clear the terminal',
+    manPage: 'SYNOPSIS\n' + 
+             '\tclear\n\n' +
+             'DESCRIPTION\n' + 
+             '\tClears the terminal of previous commands.\n\n' +
+             'AUTHOR\n' +
+             '\tWritten by Jason Rones.\n',
+    command: function(env, inputLine) {
+      document.getElementById("main-input").innerHTML = "";
     }
   });
 
