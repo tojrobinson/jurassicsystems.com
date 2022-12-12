@@ -17,8 +17,8 @@
         env.commands[commandName].command;
 
       env.active.find('.command-history')
-        .append($('<div class="entered-command">')
-        .text(line));
+      .append($('<div class="entered-command">')
+      .text('> ' + line));
 
       if (command) {
         command(env, line);
