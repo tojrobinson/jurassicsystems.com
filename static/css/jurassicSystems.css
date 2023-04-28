@@ -329,7 +329,8 @@ input[type="button"], button {
 }
 
 *:focus{outline:0 none;}
-input[type="button"], button {-moz-box-sizing: content-box;}
+input[type="button"], button {-moz-box-sizing: content-box;
+   box-sizing: content-box;}
 input[type="button"]::-moz-focus-inner, button::-moz-focus-inner { padding:0;border:0 none; }
 
 .button {

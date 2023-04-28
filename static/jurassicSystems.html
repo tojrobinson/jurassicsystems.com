@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html lang="en">
 <head>
    <meta charset="utf-8">
-   <meta http-equiv="X-UA-Compatible" window.top="IE=edge">
-   <meta name="description" window.top="">
-   <meta name="viewport" window.top="width=device-width, initial-scale=1">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="description" content="">
 
    <title>Jurassic Systems</title>
 
@@ -17,149 +14,75 @@
    <script src="js/lib/modernizr.js"></script>
 </head>
 <body>
-   <!--[if lt IE 7]>
-   <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-   <![endif]-->
-<div id="environment">
-   <div id="irix-desktop">
-      <div class="irix-window" id="main-terminal" style="z-index: 2">
-         <div class="window-bar"></div>
-         <input type="text" class="buffer" id="main-buffer" autocomplete="off">
-         <div class="inner-wrap" id="main-inner">
-            <div class="terminal-view">
-               <div class="console-preabmle">
-                  Jurassic Park, System Security Interface<br>
-                  Version 4.0.5, Alpha E<br>
-                  Ready...<br>
+   <p class="browsehappy" style="display:none;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+   
+   <div id="environment">
+      <div id="irix-desktop">
+         <div class="irix-window" id="main-terminal" style="z-index: 2">
+            <div class="window-bar"></div>
+            <input type="text" class="buffer" id="main-buffer" autocomplete="off">
+            <div class="inner-wrap" id="main-inner">
+               <div class="terminal-view">
+                  <div class="console-preabmle">
+                     Jurassic Park, System Security Interface<br>
+                     Version 4.0.5, Alpha E<br>
+                     Ready...<br>
+                  </div>
+                  <div id="main-input" class="command-history"></div>
+                  <span id="main-prompt">></span>
+                  <span class="command-input" id="curr-main-input"></span><span id="main-cursor" class="cursor">&nbsp;</span>
                </div>
-               <div id="main-input" class="command-history"></div>
-               <span id="main-prompt">></span>
-               <span class="command-input" id="curr-main-input"></span><span id="main-cursor" class="cursor">&nbsp;</span>
+            </div>
+         </div>
+
+         <div class="irix-window" id="gr-osview">
+            <div class="window-bar"></div>
+         </div>
+
+         <div class="irix-window" id="zebra-girl">
+            <div class="window-bar"></div>
+         </div>
+
+         <div class="irix-window" id="chess-terminal" style="z-index: 1">
+            <div class="window-bar"></div>
+            <input type="text" class="buffer" id="chess-buffer" autocomplete="off">
+            <div class="inner-wrap" id="chess-inner">
+               <div class="terminal-view">
+                  <div class="console-preabmle">
+                     <div>CHESS: select level of play desired</div>
+                     <table cellspacing="0">
+                        <!-- table rows -->
+                     </table>
+                     <div class="chess-line">Enter Level: 1</div>
+                     <div class="chess-line">Illegal move</div>
+                  </div>
+                  <div class="command-history"></div>
+                  <span class="command-input" id="curr-chess-input"></span><span id="chess-cursor" class="cursor">&nbsp;</span>
+               </div>
             </div>
          </div>
       </div>
-
-      <div class="irix-window" id="gr-osview">
-         <div class="window-bar"></div>
-      </div>
-
-      <div class="irix-window" id="zebra-girl">
-         <div class="window-bar"></div>
-      </div>
-
-      <div class="irix-window" id="chess-terminal" style="z-index: 1">
-         <div class="window-bar"></div>
-         <input type="text" class="buffer" id="chess-buffer" autocomplete="off">
-         <div class="inner-wrap" id="chess-inner">
-            <div class="terminal-view">
-               <div class="console-preabmle">
-                  <div>CHESS: select level of play desired</div>
-                  <table cellspacing="0">
-                     <tr>
-                        <td>0.</td>
-                        <td>80</td>
-                        <td>moves</td>
-                        <td>in</td>
-                        <td>694</td>
-                        <td>minutes</td>
-                     </tr>
-                     <tr>
-                        <td>1.</td>
-                        <td>80</td>
-                        <td>moves</td>
-                        <td>in</td>
-                        <td>213</td>
-                        <td>minutes</td>
-                     </tr>
-                     <tr>
-                        <td>2.</td>
-                        <td>70</td>
-                        <td>moves</td>
-                        <td>in</td>
-                        <td>200</td>
-                        <td>minutes</td>
-                     </tr>
-                     <tr>
-                        <td>3.</td>
-                        <td>60</td>
-                        <td>moves</td>
-                        <td>in</td>
-                        <td>190</td>
-                        <td>minutes</td>
-                     </tr>
-                     <tr>
-                        <td>4.</td>
-                        <td>60</td>
-                        <td>moves</td>
-                        <td>in</td>
-                        <td>240</td>
-                        <td>minutes</td>
-                     </tr>
-                     <tr>
-                        <td>5.</td>
-                        <td>60</td>
-                        <td>moves</td>
-                        <td>in</td>
-                        <td>10</td>
-                        <td>minutes</td>
-                     </tr>
-                     <tr>
-                        <td>6.</td>
-                        <td>60</td>
-                        <td>moves</td>
-                        <td>in</td>
-                        <td>50</td>
-                        <td>minutes</td>
-                     </tr>
-                     <tr>
-                        <td>7.</td>
-                        <td>1</td>
-                        <td>move</td>
-                        <td>in</td>
-                        <td>68</td>
-                        <td>minutes</td>
-                     </tr>
-                     <tr>
-                        <td>8.</td>
-                        <td>1</td>
-                        <td>move</td>
-                        <td>in</td>
-                        <td>96</td>
-                        <td>minutes</td>
-                     </tr>
-                     <tr>
-                        <td>9.</td>
-                        <td>1</td>
-                        <td>move</td>
-                        <td>in</td>
-                        <td>680</td>
-                        <td>minutes</td>
-                     </tr>
-                  </table>
-                  <div class="chess-line">Enter Level: 1</div>
-                  <div class="chess-line">Illegal move</div>
-               </div>
-               <div class="command-history"></div>
-               <span class="command-input" id="curr-chess-input"></span><span id="chess-cursor" class="cursor">&nbsp;</span>
+      <div id="apple-desktop">
+         <div id="mac-hd-window" class="mac-window"></div>
+         <div id="the-king-window" class="mac-window">
+            <div class="window-bar"></div>
+            <video height="540" width="540" loop id="the-king-video">
+               <source src="vid/theKing.mp4" type="video/mp4">
+               Your browser does not support the video tag
+               </video>
+               <div id="the-king-blur"></div>
             </div>
          </div>
       </div>
    </div>
-   <div id="apple-desktop">
-      <div id="mac-hd-window" class="mac-window">
-      </div>
-      <div id="the-king-window" class="mac-window">
-         <div class="window-bar"></div>
-         <video height="540" width="540" loop id="the-king-video">
-            <source src="vid/theKing.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-         </video>
-      <div id="the-king-blur"></div>
-      </div>
-   </div>
-</div>
    <script src="js/lib/jquery.js"></script>
    <script src="js/lib/soundmanager2-nodebug-jsmin.js"></script>
    <script src="js/jurassicSystems.js"></script>
+   <script>
+      // Check for outdated browser
+      if (document.documentMode || /Edge/.test(navigator.userAgent)) {
+         document.querySelector('.browsehappy').style.display = 'block';
+      }
+   </script>
 </body>
 </html>
