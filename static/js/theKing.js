@@ -1,75 +1,80 @@
 (function($) {
+  const preloadImages = [
+    'theKingBlur.jpg',
+    'macHDBlur.jpg',
+    'macHDFocus.jpg',
+  ];
 
-   $(['theKingBlur.jpg',
-      'macHDBlur.jpg',
-      'macHDFocus.jpg']).each(function() {
-         $('<img />')[0].src = 'img/' + this;
+  $(function() {
+    preloadImages.forEach(function(imageName) {
+      const img = new Image();
+      img.src = 'img/' + imageName;
+    });
+
+    let diffX = 0;
+    let diffY = 0;
+
+    $('.window-bar').on('mousedown', function(event) {
+      const dragging = $(this).parent()
+        .addClass('dragging');
+
+      diffY = event.pageY - dragging.offset().top;
+      diffX = event.pageX - dragging.offset().left;
+    });
+
+    $(document).on('mousemove', function(event) {
+      $('.dragging').offset({
+        top: event.pageY - diffY,
+        left: event.pageX - diffX,
       });
+    });
 
-   (function() {
-      var diffX = 0;
-      var diffY = 0;
-
-      $('.window-bar').mousedown(function(e) {
-         var dragging = $(this).parent()
-                               .addClass('dragging');
-         diffY = e.pageY - dragging.offset().top;
-         diffX = e.pageX - dragging.offset().left;
-      });
-
-      $('body').mousemove(function(e) {
-         $('.dragging').offset({
-            top: e.pageY - diffY,
-            left: e.pageX - diffX 
-         });
-      });
-   }());
-
-   $('body').mouseup(function(e) {
+    $(document).on('mouseup', function() {
       $('.dragging').removeClass('dragging');
-   });
+    });
 
-   $('#the-king-window').ready(function() {
+    setTimeout(function() {
+      const theKingVideo = document.getElementById('the-king-video');
+
+      if (theKingVideo) {
+        const playPromise = theKingVideo.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(function() {
+            // Some browsers require a user gesture before playback; ignore errors.
+          });
+        }
+      }
+
+      $('#mac-hd-window').css('background-image', 'url(img/macHDBlur.jpg)');
+      $('#the-king-window').show();
+
+      if ($(window).width() < 1200) {
+        setTimeout(function() {
+          $('#home-key').css('z-index', '64000');
+        }, 10000);
+      }
+    }, 2500);
+
+    const flicker = function(altId, interval, duration) {
+      let visible = true;
+      const alt = $('#' + altId);
+      const flickering = setInterval(function() {
+        alt.css('opacity', visible ? '1' : '0');
+        visible = !visible;
+      }, interval);
+
       setTimeout(function() {
-const theKingVideo = document.getElementById('the-king-video');
-
-                theKingVideo != null && theKingVideo.play();
-         $('#mac-hd-window').css('background-image', 'url(img/macHDBlur.jpg)');
-         $('#the-king-window').show();
-
-         if ($(window).width() < 1200) {
-            setTimeout(function() {
-               $('#home-key').css('z-index', '64000');
-            }, 10000);
-         }
-
-      }, 2500);
-   });
-
-   var flicker = function(altId, interval, duration) {
-      var visible = true,
-          alt = $('#' + altId),
-          flickering = setInterval(function() {
-             if (visible) {
-                alt.css('opacity', '1');
-             } else {
-                alt.css('opacity', '0');
-             }
-
-             visible = !visible;
-          }, interval);
-
-      setTimeout(function() {
-         clearInterval(flickering);
-         alt.css('opacity', '0');
+        clearInterval(flickering);
+        alt.css('opacity', '0');
       }, duration);
-   }
+    };
 
-   $('#apple-desktop').click(function(e){
-      var isKing = $(e.target).closest('#the-king-window').length;
+    $('#apple-desktop').on('click', function(event) {
+      const isKing = $(event.target).closest('#the-king-window').length;
 
       if (!isKing) {
-         flicker('the-king-blur', 50, 450);
+        flicker('the-king-blur', 50, 450);
       }
-   });
+    });
+  });
 }(jQuery));

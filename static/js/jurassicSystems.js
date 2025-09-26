@@ -1,4 +1,4 @@
-(function($, sm) {
+(function($) {
   const jpTerminal = (function() {
     const env = {
       accessAttempts: 0,
@@ -10,8 +10,13 @@
     };
     const api = {};
 
+    const normalizeCommandName = function(name) {
+      return (name || '').toLowerCase();
+    };
+
     api.buildCommandLine = function(line) {
-      const commandName = line.trim().split(/ /)[0];
+      const commandToken = line.trim().split(/ /)[0];
+      const commandName = normalizeCommandName(commandToken);
       const command =
         env.commands[commandName] &&
         env.commands[commandName].command;
@@ -24,17 +29,21 @@
         command(env, line);
       } else if (commandName) {
         env.active.find('.command-history')
-          .append($('<div>').text(commandName + ': command not found'));
+          .append($('<div>').text(commandToken + ': command not found'));
       }
     }
 
     api.addCommand = function(details) {
+      const commandName = normalizeCommandName(details && details.name);
+
       if (
-        details.name &&
-        !env.commands.hasOwnProperty(details.name) &&
+        commandName &&
+        !env.commands.hasOwnProperty(commandName) &&
+        details &&
+        details.command &&
         (details.command.constructor === Function)
       ) {
-        env.commands[details.name] = details;
+        env.commands[commandName] = details;
       }
     }
 
@@ -51,78 +60,104 @@
     }
 
     api.init = function() {
-      // HTML5 audio element detection
-      if (Modernizr.audio.mp3 || Modernizr.audio.wav || Modernizr.audio.ogg) {
-        const beepHTML5 = $('<audio preload="auto"/>');
-        const lockDownHTML5 = $('<audio preload="auto"/>');
-        const dennisMusicHTML5 = $('<audio preload="auto"/>');
-
-        beepHTML5.append('<source src="snd/beep.ogg">');
-        beepHTML5.append('<source src="snd/beep.mp3">');
-        beepHTML5.append('<source src="snd/beep.wav">');
-
-        lockDownHTML5.append('<source src="snd/lockDown.ogg">');
-        lockDownHTML5.append('<source src="snd/lockDown.mp3">');
-        lockDownHTML5.append('<source src="snd/lockDown.wav">');
-
-        dennisMusicHTML5.append('<source src="snd/dennisMusic.ogg">');
-        dennisMusicHTML5.append('<source src="snd/dennisMusic.mp3">');
-        dennisMusicHTML5.append('<source src="snd/dennisMusic.wav">');
-
-        env.sounds.beep = {
-          play: function() {
-            beepHTML5[0].load();
-            beepHTML5[0].play();
-          }
-        };
-
-        env.sounds.lockDown = {
-          play: function() {
-            lockDownHTML5[0].load();
-            lockDownHTML5[0].play();
-          }
-        };
-
-        env.sounds.dennisMusic = {
-          play: function() {
-            dennisMusicHTML5[0].load();
-            dennisMusicHTML5[0].play();
-          },
-          stop: function() {
-            dennisMusicHTML5[0].pause();
-          },
-        };
-
-        dennisMusicHTML5.bind('ended', function() {
-          env.sounds.dennisMusic.play();
-        });
-      }  else {
-        sm.setup({ 
-          url: '/swf/soundManager/',
-          onready: function() {
-            env.sounds.beep = sm.createSound({
-              autoLoad: true,
-              id: 'beep',
-              url: '/snd/beep.mp3',
-            });
-
-            env.sounds.lockDown = sm.createSound({
-              autoLoad: true,
-              id: 'lockDown',
-              url: '/snd/lockDown.mp3',
-            });
-
-            env.sounds.dennisMusic = sm.createSound({
-              autoLoad: true,
-              id: 'dennisMusic',
-              onfinish: function() {
-                sm.play('dennisMusic');
-              },
-              url: '/snd/dennisMusic.mp3',
-            });
-          },
-        });
+      const canPlayAudio = typeof Audio !== 'undefined';
+      if (!canPlayAudio) {
+        return;
       }
+
+      const createSound = function(sources, options) {
+        const settings = options || {};
+        const audio = document.createElement('audio');
+
+        if (!audio.canPlayType) {
+          return null;
+        }
+
+        audio.preload = 'auto';
+
+        let supportedSource = null;
+        for (let i = 0; i < sources.length; i += 1) {
+          const source = sources[i];
+          if (audio.canPlayType(source.type || '')) {
+            supportedSource = source;
+            break;
+          }
+        }
+
+        if (!supportedSource) {
+          return null;
+        }
+
+        audio.src = supportedSource.src;
+        try {
+          audio.load();
+        } catch (err) {
+          // Ignore load errors triggered by aggressive autoplay policies.
+        }
+
+        if (settings.loop) {
+          audio.loop = true;
+        }
+
+        const play = function() {
+          try {
+            audio.pause();
+            audio.currentTime = 0;
+          } catch (err) {
+            // Ignore exceptions when resetting audio.
+          }
+
+          const playPromise = audio.play();
+          if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(function() {
+              // Ignore autoplay rejections; user interaction will trigger playback later.
+            });
+          }
+        };
+
+        const stop = function() {
+          audio.pause();
+          if (!settings.loop) {
+            try {
+              audio.currentTime = 0;
+            } catch (err) {
+              // Ignore reset issues for browsers that disallow setting currentTime.
+            }
+          }
+        };
+
+        return {
+          play: play,
+          stop: stop,
+        };
+      };
+
+      const silentSound = {
+        play: $.noop,
+        stop: $.noop,
+      };
+
+      const withFallback = function(sound) {
+        return sound || silentSound;
+      };
+
+      env.sounds.beep = withFallback(createSound([
+        { src: 'snd/beep.ogg', type: 'audio/ogg' },
+        { src: 'snd/beep.mp3', type: 'audio/mpeg' },
+        { src: 'snd/beep.wav', type: 'audio/wav' },
+      ]));
+
+      env.sounds.lockDown = withFallback(createSound([
+        { src: 'snd/lockDown.ogg', type: 'audio/ogg' },
+        { src: 'snd/lockDown.mp3', type: 'audio/mpeg' },
+        { src: 'snd/lockDown.wav', type: 'audio/wav' },
+      ]));
+
+      env.sounds.dennisMusic = withFallback(createSound([
+        { src: 'snd/dennisMusic.ogg', type: 'audio/ogg' },
+        { src: 'snd/dennisMusic.mp3', type: 'audio/mpeg' },
+        { src: 'snd/dennisMusic.wav', type: 'audio/wav' },
+      ], { loop: true }));
     };
 
     return api;
@@ -187,7 +222,7 @@
       ) {
         $('#main-input')
           .append($('<img id="asciiNewman" src="/img/asciiNewman.jpg" />'));
-        $('#asciiNewman').load(function() {
+        $('#asciiNewman').on('load', function() {
           const wrap = $('.inner-wrap', env.active);
           wrap.scrollTop(wrap[0].scrollHeight);
         });
@@ -202,7 +237,7 @@
         const andMessage = $('<span>').text('...and...');
         let errorSpam;
 
-        $('.irix-window').unbind('keydown');
+        $('.irix-window').off('keydown');
         $('#main-prompt').addClass('hide');
 
         setTimeout(function() {
@@ -375,10 +410,11 @@
              'reference manuals.\n',
     command: function(env, inputLine) {
       const arg = inputLine.trim().split(/ +/)[1] || '';
+      const normalizedArg = normalizeCommandName(arg);
       let output = 'What manual page do you want?';
 
-      if (env.commands.hasOwnProperty(arg)) {
-        output = env.commands[arg].manPage;
+      if (env.commands.hasOwnProperty(normalizedArg)) {
+        output = env.commands[normalizedArg].manPage;
       } else if (arg) {
         output = 'No manual entry for ' + $('<div/>').text(arg).html();
       }
@@ -396,16 +432,14 @@
               '\tDisplay a command summary for Jurassic Systems.\n\n' +
               'AUTHOR\n' +
               '\tWritten by <a href="https://tully.io">Tully Robinson</a>.\n',
-    command: function(env, inputLine) {
-      for (var command in env.commands) {
+    command: function(env) {
+      Object.keys(env.commands).forEach(function(commandName) {
+        const command = env.commands[commandName];
         env.active.find('.command-history')
           .append($('<div>')
-          .text(
-            env.commands[command].name + 
-            ' - ' +
-            env.commands[command].summary)
+          .text(command.name + ' - ' + command.summary)
           );
-      }
+      });
     }
   });
 
@@ -455,21 +489,21 @@
       if (!location.pathname.match(/system/)) {
         $('#main-buffer').blur();
         $('#intro').show();
-        $('#intro').click(function() {
+        $('#intro').on('click', function() {
           $(this).fadeOut(1000);
           $('#intro-scene').attr('src', '');
         });
       }
     }, 4500);
 
-    $('body').click(blurAllWindows);
+    $('body').on('click', blurAllWindows);
 
     (function() {
       let diffX = 0;
       let diffY = 0;
 
       $('.window-bar').mousedown(function(e) {
-        var dragging = $(this).parent()
+        const dragging = $(this).parent()
         .css('z-index', jpTerminal.nextIndex())
         .addClass('dragging');
       diffY = e.pageY - dragging.offset().top;
@@ -488,7 +522,7 @@
       $('.dragging').removeClass('dragging');
     });
 
-    $('.irix-window').click(function(e) {
+    $('.irix-window').on('click', function(e) {
       e.stopPropagation();
       blurAllWindows();
       jpTerminal.setActive(this);
@@ -531,18 +565,18 @@
       wrap.scrollTop(wrap[0].scrollHeight);
     });
 
-    $('#main-terminal .buffer').bind('input propertychange', function() {
+    $('#main-terminal .buffer').on('input', function() {
       $('#curr-main-input').text($(this).val());
     });
 
-    $('#chess-terminal .buffer').bind('input propertychange', function() {
+    $('#chess-terminal .buffer').on('input', function() {
       $('#curr-chess-input').text($(this).val());
     });
 
-    $('#apple-desktop').click(function(e){
+    $('#apple-desktop').on('click', function(e){
       if ($(e.target).closest('.mac-window').attr('id') !== 'the-king-window') {
         flicker('the-king-blur', 50, 450);
       }
     });
   });
-}(jQuery, soundManager));
+}(jQuery));

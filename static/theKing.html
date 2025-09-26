@@ -1,38 +1,30 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html lang="en">
 <head>
    <meta charset="utf-8">
-   <meta http-equiv="X-UA-Compatible" window.top="IE=edge">
-   <meta name="description" window.top="">
-   <meta name="viewport" window.top="width=device-width, initial-scale=1">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="Jurassic Systems standalone The King experience.">
 
    <title>Jurassic Systems</title>
 
    <link rel="stylesheet" href="css/normalize.css">
    <link rel="icon" href="favicon.ico">
    <link rel="stylesheet" href="css/theKing.css">
-   <script src="js/lib/modernizr.js"></script>
 </head>
 <body>
-   <!--[if lt IE 7]>
-   <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-   <![endif]-->
 <div id="apple-desktop">
    <div id="mac-hd-window">
    </div>
    <div id="the-king-window" class="mac-window">
       <div class="window-bar"></div>
-         <video height="540" width="540" loop id="the-king-video">
+         <video height="540" width="540" loop playsinline id="the-king-video">
             <source src="vid/theKing.mp4" type="video/mp4">
             Your browser does not support the video tag.
          </video>
       <div id="the-king-blur"></div>
    </div>
 </div>
-   <script src="js/lib/jquery.js" type="text/javascript"></script>
-   <script src="js/theKing.js" type="text/javascript"></script>
+   <script src="js/lib/jquery.js" defer></script>
+   <script src="js/theKing.js" defer></script>
 </body>
 </html>
