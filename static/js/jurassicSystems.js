@@ -10,8 +10,13 @@
     };
     const api = {};
 
+    const normalizeCommandName = function(name) {
+      return (name || '').toLowerCase();
+    };
+
     api.buildCommandLine = function(line) {
-      const commandName = line.trim().split(/ /)[0];
+      const commandToken = line.trim().split(/ /)[0];
+      const commandName = normalizeCommandName(commandToken);
       const command =
         env.commands[commandName] &&
         env.commands[commandName].command;
@@ -24,17 +29,21 @@
         command(env, line);
       } else if (commandName) {
         env.active.find('.command-history')
-          .append($('<div>').text(commandName + ': command not found'));
+          .append($('<div>').text(commandToken + ': command not found'));
       }
     }
 
     api.addCommand = function(details) {
+      const commandName = normalizeCommandName(details && details.name);
+
       if (
-        details.name &&
-        !env.commands.hasOwnProperty(details.name) &&
+        commandName &&
+        !env.commands.hasOwnProperty(commandName) &&
+        details &&
+        details.command &&
         (details.command.constructor === Function)
       ) {
-        env.commands[details.name] = details;
+        env.commands[commandName] = details;
       }
     }
 
@@ -401,10 +410,11 @@
              'reference manuals.\n',
     command: function(env, inputLine) {
       const arg = inputLine.trim().split(/ +/)[1] || '';
+      const normalizedArg = normalizeCommandName(arg);
       let output = 'What manual page do you want?';
 
-      if (env.commands.hasOwnProperty(arg)) {
-        output = env.commands[arg].manPage;
+      if (env.commands.hasOwnProperty(normalizedArg)) {
+        output = env.commands[normalizedArg].manPage;
       } else if (arg) {
         output = 'No manual entry for ' + $('<div/>').text(arg).html();
       }
