@@ -4,17 +4,16 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="description" content="">
+   <meta name="description" content="HTML5 recreation of the Jurassic Park system terminal experience.">
 
    <title>Jurassic Systems</title>
 
    <link rel="stylesheet" href="css/normalize.css">
    <link rel="icon" href="favicon.ico">
    <link rel="stylesheet" href="css/jurassicSystems.css">
-   <script src="js/lib/modernizr.js"></script>
 </head>
 <body>
-   <p class="browsehappy" style="display:none;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+   <p class="browsehappy" style="display:none;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
    
    <div id="environment">
       <div id="irix-desktop">
@@ -66,7 +65,7 @@
          <div id="mac-hd-window" class="mac-window"></div>
          <div id="the-king-window" class="mac-window">
             <div class="window-bar"></div>
-            <video height="540" width="540" loop id="the-king-video">
+            <video height="540" width="540" loop playsinline id="the-king-video">
                <source src="vid/theKing.mp4" type="video/mp4">
                Your browser does not support the video tag
                </video>
@@ -75,9 +74,8 @@
          </div>
       </div>
    </div>
-   <script src="js/lib/jquery.js"></script>
-   <script src="js/lib/soundmanager2-nodebug-jsmin.js"></script>
-   <script src="js/jurassicSystems.js"></script>
+   <script src="js/lib/jquery.js" defer></script>
+   <script src="js/jurassicSystems.js" defer></script>
    <script>
       // Check for outdated browser
       if (document.documentMode || /Edge/.test(navigator.userAgent)) {
