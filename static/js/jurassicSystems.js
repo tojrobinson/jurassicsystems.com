@@ -7,6 +7,8 @@
       maxIndex: 1,
       musicOn: false,
       sounds: {},
+      desktopShift: 3200,
+      resizeDebounce: null,
     };
     const api = {};
 
@@ -59,6 +61,25 @@
       return ++env.maxIndex;
     }
 
+    api.setDesktopShift = function(shift) {
+      env.desktopShift = shift;
+    };
+
+    api.getDesktopShift = function() {
+      return env.desktopShift;
+    };
+
+    api.setResizeDebounce = function(timeoutId) {
+      env.resizeDebounce = timeoutId;
+    };
+
+    api.clearResizeDebounce = function() {
+      if (env.resizeDebounce) {
+        clearTimeout(env.resizeDebounce);
+        env.resizeDebounce = null;
+      }
+    };
+
     api.init = function() {
       const canPlayAudio = typeof Audio !== 'undefined';
       if (!canPlayAudio) {
@@ -66,18 +87,20 @@
       }
 
       const createSound = function(sources, options) {
-        const settings = options || {};
+        const settings = Object.assign({
+          loop: false,
+          preload: 'auto',
+        }, options);
         const audio = document.createElement('audio');
 
         if (!audio.canPlayType) {
           return null;
         }
 
-        audio.preload = 'auto';
+        audio.preload = settings.preload;
 
         let supportedSource = null;
-        for (let i = 0; i < sources.length; i += 1) {
-          const source = sources[i];
+        for (const source of sources) {
           if (audio.canPlayType(source.type || '')) {
             supportedSource = source;
             break;
@@ -95,9 +118,7 @@
           // Ignore load errors triggered by aggressive autoplay policies.
         }
 
-        if (settings.loop) {
-          audio.loop = true;
-        }
+        audio.loop = Boolean(settings.loop);
 
         const play = function() {
           try {
@@ -132,6 +153,19 @@
         };
       };
 
+      const buildAudioSources = function(baseName, includeLegacy = true) {
+        const modernSources = [
+          { src: `snd/${baseName}.mp3`, type: 'audio/mpeg' },
+          { src: `snd/${baseName}.ogg`, type: 'audio/ogg' },
+        ];
+
+        if (includeLegacy) {
+          modernSources.push({ src: `snd/${baseName}.wav`, type: 'audio/wav' });
+        }
+
+        return modernSources;
+      };
+
       const silentSound = {
         play: $.noop,
         stop: $.noop,
@@ -141,23 +175,11 @@
         return sound || silentSound;
       };
 
-      env.sounds.beep = withFallback(createSound([
-        { src: 'snd/beep.ogg', type: 'audio/ogg' },
-        { src: 'snd/beep.mp3', type: 'audio/mpeg' },
-        { src: 'snd/beep.wav', type: 'audio/wav' },
-      ]));
+      env.sounds.beep = withFallback(createSound(buildAudioSources('beep')));
 
-      env.sounds.lockDown = withFallback(createSound([
-        { src: 'snd/lockDown.ogg', type: 'audio/ogg' },
-        { src: 'snd/lockDown.mp3', type: 'audio/mpeg' },
-        { src: 'snd/lockDown.wav', type: 'audio/wav' },
-      ]));
+      env.sounds.lockDown = withFallback(createSound(buildAudioSources('lockDown')));
 
-      env.sounds.dennisMusic = withFallback(createSound([
-        { src: 'snd/dennisMusic.ogg', type: 'audio/ogg' },
-        { src: 'snd/dennisMusic.mp3', type: 'audio/mpeg' },
-        { src: 'snd/dennisMusic.wav', type: 'audio/wav' },
-      ], { loop: true }));
+      env.sounds.dennisMusic = withFallback(createSound(buildAudioSources('dennisMusic'), { loop: true }));
     };
 
     return api;
@@ -165,6 +187,33 @@
 
   jpTerminal.init();
   jpTerminal.setActive('#main-terminal');
+
+  const updateDesktopShift = function() {
+    jpTerminal.clearResizeDebounce();
+    const mainDesktop = $('#irix-desktop');
+    const appleDesktop = $('#apple-desktop');
+    const computedWidth = Math.max(
+      window.innerWidth,
+      mainDesktop.outerWidth() || 0,
+      appleDesktop.outerWidth() || 0,
+    );
+    // Provide a minimum to keep the animation consistent on narrow viewports.
+    const shift = Math.max(computedWidth, 1800);
+    jpTerminal.setDesktopShift(shift);
+    $('#apple-desktop').css('left', -shift);
+
+    const environment = $('#environment');
+    const currentLeft = parseFloat(environment.css('left')) || 0;
+    if (currentLeft > 0) {
+      environment.css('left', shift);
+    }
+  };
+
+  const scheduleDesktopShiftUpdate = function() {
+    jpTerminal.clearResizeDebounce();
+    const timeoutId = window.setTimeout(updateDesktopShift, 150);
+    jpTerminal.setResizeDebounce(timeoutId);
+  };
 
   jpTerminal.addCommand({
     name: 'music',
@@ -249,8 +298,10 @@
         }, 1000);
 
         setTimeout(function() {
+          updateDesktopShift();
+          const shiftDistance = jpTerminal.getDesktopShift();
           $('#environment').animate(
-            {'left': '+=3000'},
+            { left: `+=${shiftDistance}` },
             2000,
             function() {
               setTimeout(function() {
@@ -272,7 +323,7 @@
 
         setTimeout(function() {
           errorSpam = setInterval(function() {
-            var errorMessage = $('<div>YOU DIDN\'T SAY THE MAGIC WORD!</div>');
+            const errorMessage = $('<div>YOU DIDN\'T SAY THE MAGIC WORD!</div>');
             $('#main-input').append(errorMessage);
             $('#main-inner').scrollTop($('#main-inner')[0].scrollHeight);
           }, 50);
@@ -433,7 +484,7 @@
               'AUTHOR\n' +
               '\tWritten by <a href="https://tully.io">Tully Robinson</a>.\n',
     command: function(env) {
-      Object.keys(env.commands).forEach(function(commandName) {
+      Object.keys(env.commands).sort().forEach(function(commandName) {
         const command = env.commands[commandName];
         env.active.find('.command-history')
           .append($('<div>')
@@ -470,14 +521,19 @@
   };
 
   $(document).ready(function() {
+    updateDesktopShift();
+    $(window).on('resize orientationchange', scheduleDesktopShiftUpdate);
+
     // attempt to cache objects
-    $(['theKingBlur.jpg',
+    [
+      'theKingBlur.jpg',
       'theKingFocus.jpg',
       'macHDBlur.jpg',
       'asciiNewman.jpg',
       'zebraGirlWindow.jpg',
-    ]).each(function() {
-      new Image().src = 'img/' + this;
+    ].forEach(function(imageName) {
+      const preloadImage = new Image();
+      preloadImage.src = `img/${imageName}`;
     });
 
 

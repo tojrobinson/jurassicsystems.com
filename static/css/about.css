@@ -37,15 +37,20 @@ h1,h2, h3 {
 }
 
 input[type="button"], button {
-   border:0 none;
-   font:inherit;
+   border: 0;
+   font: inherit;
 }
 
-*:focus{outline:0 none;}
+input[type="button"]::-moz-focus-inner,
+button::-moz-focus-inner {
+   padding: 0;
+   border: 0;
+}
 
-input[type="button"], button {-moz-box-sizing: content-box;}
-
-input[type="button"]::-moz-focus-inner, button::-moz-focus-inner { padding:0;border:0 none; }
+:focus-visible {
+   outline: 2px solid #164cc6;
+   outline-offset: 2px;
+}
 
 table  {
    margin: 10px;
@@ -71,8 +76,6 @@ td,th {
 
 .button {
    background-image:url("/img/buttonOverlay.png");
-   -moz-border-radius:5px;
-   -webkit-border-radius:5px;
    border-radius:5px;
    cursor:pointer;
    display:inline-block;

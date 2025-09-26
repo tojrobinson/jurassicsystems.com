@@ -1,15 +1,30 @@
+html {
+   height: 100%;
+}
+
 body {
    overflow-x: hidden;
    overflow-y: auto;
-   padding: 0px;
-   margin: 0px;
-   background: black;
-   width: 100%;
-   height: 100%;
+   margin: 0;
+   min-height: 100vh;
+   background: #000;
+}
+
+.browsehappy {
+   display: none;
+   margin: 0;
+}
+
+.browsehappy.is-visible {
+   display: block;
 }
 
 #environment {
    position: relative;
+   min-height: 100vh;
+   overflow: hidden;
+   width: 100vw;
+   left: 0;
 }
 
 #irix-boot {
@@ -117,27 +132,28 @@ body {
    padding: 5px;
 }
 
-#irix-desktop {
-   background-image: url("../img/irixBackground.jpg");
+#irix-desktop,
+#apple-desktop {
+   position: absolute;
+   top: 0;
+   width: 100vw;
+   min-height: 100vh;
+   padding: clamp(10px, 2vw, 40px);
+   box-sizing: border-box;
    background-repeat: no-repeat;
-   overflow: hidden;
-   margin-left: 10px;
-   margin-top: 10px;
-   width: 1124px;
-   height: 850px;
+   background-size: cover;
+   background-position: center;
    overflow: hidden;
 }
 
+#irix-desktop {
+   left: 0;
+   background-image: url("../img/irixBackground.jpg");
+}
+
 #apple-desktop {
+   left: -3200px;
    background-image: url("../img/appleBackground.jpg");
-   background-repeat: no-repeat;
-   overflow: hidden;
-   margin-left: 10px;
-   margin-top: 10px;
-   position: absolute;
-   left: -3000px;
-   width: 1124px;
-   height: 850px;
    border-radius: 10px;
 }
 
@@ -150,8 +166,8 @@ body {
    background-image: url("../img/mainTerm.jpg");
    background-repeat: no-repeat;
    position: absolute;
-   top: 120px;
-   left: 160px;
+   top: clamp(80px, 14vh, 140px);
+   left: clamp(40px, 12vw, 160px);
 }
 
 #main-terminal .inner-wrap {
@@ -195,8 +211,8 @@ body {
    height: 215px;
    width: 820px;
    position: absolute;
-   top: 600px;
-   left: 5px;
+   top: clamp(440px, 56vh, 600px);
+   left: clamp(10px, 3vw, 40px);
 }
 
 #chess-terminal .inner-wrap {
@@ -210,8 +226,8 @@ body {
    width: 662px;
    position: absolute;
    display: none;
-   right: 20px;
-   top: 40px;
+   right: clamp(10px, 5vw, 40px);
+   top: clamp(20px, 8vh, 60px);
    background-image: url("../img/zebraGirlWindow.jpg");
 }
 
@@ -233,8 +249,8 @@ body {
    height: 369px;
    width: 393px;
    position: absolute;
-   top: 220px;
-   left: 70px;
+   top: clamp(160px, 20vh, 220px);
+   left: clamp(20px, 8vw, 70px);
 }
 
 #the-king-window {
@@ -244,13 +260,16 @@ body {
    width: 600px;
    height: 620px;
    position: absolute;
-   left: 50px;
-   top: 130px;
+   left: clamp(30px, 7vw, 90px);
+   top: clamp(80px, 16vh, 150px);
    text-align: center;
 }
 
 #the-king-video {
   margin-top: 40px;
+  width: 100%;
+  max-width: 540px;
+  height: auto;
 }
 
 #the-king-blur {
@@ -279,8 +298,8 @@ body {
    background-image: url("../img/macHDFocus.jpg");
    background-repeat: no-repeat;
    position: absolute;
-   left: 15px;
-   top: 100px
+   left: clamp(15px, 4vw, 90px);
+   top: clamp(60px, 14vh, 120px);
 }
 
 .buffer {
@@ -302,17 +321,13 @@ body {
    background: #5fde5f;
 }
 
-#irix-desktop {
-   position: absolute;
-}
-
-table td, tr {
+table td, table tr {
    padding: 0px;
    text-align: left;
    line-height: 15px;
 }
 
-#chess-terminal table td, tr {
+#chess-terminal table td, #chess-terminal table tr {
    padding-left: 5px;
    padding-right: 5px;
    line-height: 13px;
@@ -324,19 +339,24 @@ table td, tr {
 }
 
 input[type="button"], button {
-   border:0 none;
-   font:inherit;
+   border: 0;
+   font: inherit;
+   box-sizing: content-box;
 }
 
-*:focus{outline:0 none;}
-input[type="button"], button {-moz-box-sizing: content-box;
-   box-sizing: content-box;}
-input[type="button"]::-moz-focus-inner, button::-moz-focus-inner { padding:0;border:0 none; }
+input[type="button"]::-moz-focus-inner,
+button::-moz-focus-inner {
+   padding: 0;
+   border: 0;
+}
+
+:focus-visible {
+   outline: 2px solid #5fde5f;
+   outline-offset: 2px;
+}
 
 .button {
    background-image:url("../img/buttonOverlay.png");
-   -moz-border-radius:5px;
-   -webkit-border-radius:5px;
    border-radius:5px;
    cursor:pointer;
    display:inline-block;

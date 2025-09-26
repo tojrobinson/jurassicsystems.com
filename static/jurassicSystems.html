@@ -13,7 +13,7 @@
    <link rel="stylesheet" href="css/jurassicSystems.css">
 </head>
 <body>
-   <p class="browsehappy" style="display:none;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+   <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
    
    <div id="environment">
       <div id="irix-desktop">
@@ -78,8 +78,9 @@
    <script src="js/jurassicSystems.js" defer></script>
    <script>
       // Check for outdated browser
-      if (document.documentMode || /Edge/.test(navigator.userAgent)) {
-         document.querySelector('.browsehappy').style.display = 'block';
+      const upgradePrompt = document.querySelector('.browsehappy');
+      if (upgradePrompt && (document.documentMode || /Edge/.test(navigator.userAgent))) {
+         upgradePrompt.classList.add('is-visible');
       }
    </script>
 </body>

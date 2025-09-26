@@ -1,9 +1,13 @@
+html {
+   height: 100%;
+}
+
 body {
    overflow-x: hidden;
-   overflow-y: scroll;
-   padding: 0px;
-   margin: 0px;
-   background: black;
+   overflow-y: auto;
+   margin: 0;
+   min-height: 100vh;
+   background: #000;
 }
 
 #environment {
@@ -22,15 +26,17 @@ body {
 }
 
 #apple-desktop {
+   position: relative;
+   width: 100vw;
+   min-height: 100vh;
+   padding: clamp(10px, 2vw, 40px);
+   box-sizing: border-box;
    background-image: url("../img/appleBackground.jpg");
    background-repeat: no-repeat;
-   overflow: hidden;
-   margin-left: 10px;
-   margin-top: 10px;
-   position: absolute;
-   width: 1124px;
-   height: 850px;
+   background-size: cover;
+   background-position: center;
    border-radius: 10px;
+   overflow: hidden;
 }
 
 #the-king-window {
@@ -40,13 +46,16 @@ body {
    width: 600px;
    height: 620px;
    position: absolute;
-   left: 50px;
-   top: 130px;
+   left: clamp(30px, 7vw, 90px);
+   top: clamp(80px, 16vh, 150px);
    text-align: center;
 }
 
 #the-king-video {
   margin-top: 40px;
+  width: 100%;
+  max-width: 540px;
+  height: auto;
 }
 
 #the-king-blur {
@@ -74,8 +83,8 @@ body {
    background-image: url("../img/macHDFocus.jpg");
    background-repeat: no-repeat;
    position: absolute;
-   left: 15px;
-   top: 100px
+   left: clamp(15px, 5vw, 120px);
+   top: clamp(80px, 12vh, 160px);
 }
 
 .mac-window {
