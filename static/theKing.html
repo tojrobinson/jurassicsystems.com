@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <meta name="description" content="Jurassic Systems standalone The King experience.">
-
-   <title>Jurassic Systems</title>
-
-   <link rel="stylesheet" href="css/normalize.css">
-   <link rel="icon" href="favicon.ico">
-   <link rel="stylesheet" href="css/theKing.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Jurassic Systems standalone The King experience.">
+  <title>Jurassic Systems</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/theKing.css">
 </head>
 <body>
-<div id="apple-desktop">
-   <div id="mac-hd-window">
-   </div>
-   <div id="the-king-window" class="mac-window">
-      <div class="window-bar"></div>
-         <video height="540" width="540" loop playsinline id="the-king-video">
-            <source src="vid/theKing.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-         </video>
-      <div id="the-king-blur"></div>
-   </div>
-</div>
-   <script src="js/lib/jquery.js" defer></script>
-   <script src="js/theKing.js" defer></script>
+  <main id="apple-desktop" role="main">
+    <div class="desktop-stage">
+      <div id="mac-hd-window" aria-hidden="true"></div>
+      <section
+        id="the-king-window"
+        class="mac-window"
+        aria-label="The King video window"
+        aria-hidden="true"
+        hidden
+      >
+        <div class="window-bar" role="presentation"></div>
+        <video
+          id="the-king-video"
+          width="540"
+          height="540"
+          loop
+          playsinline
+          preload="auto"
+        >
+          <source src="vid/theKing.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div id="the-king-blur" aria-hidden="true"></div>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="js/theKing.js"></script>
 </body>
 </html>
