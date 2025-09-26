@@ -1,1 +1,132 @@
+:root {
+  color-scheme: dark;
+  --desktop-padding: clamp(1rem, 4vw, 3rem);
+}
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  background-image: url("../img/appleBackground.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  overflow: auto;
+}
+
+#apple-desktop {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: var(--desktop-padding);
+}
+
+.desktop-stage {
+  position: relative;
+  width: min(
+    1124px,
+    max(320px, calc(100vw - 2 * var(--desktop-padding))),
+    max(320px, calc((100vh - 2 * var(--desktop-padding)) * 1124 / 850))
+  );
+  aspect-ratio: 1124 / 850;
+  border-radius: 10px;
+  overflow: hidden;
+  background-image: url("../img/appleBackground.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.65);
+}
+
+#the-king-window {
+  position: absolute;
+  left: 4.451%;
+  top: 15.294%;
+  width: 53.376%;
+  height: 72.941%;
+  background-image: url("../img/theKingFocus.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+}
+
+#the-king-window[hidden] {
+  display: none;
+}
+
+#the-king-video {
+  width: 90%;
+  max-width: 540px;
+  aspect-ratio: 1 / 1;
+  margin-top: clamp(1rem, 6.5%, 2.5rem);
+  border-radius: 8px;
+}
+
+#the-king-blur {
+  position: absolute;
+  inset: 0;
+  background-image: url("../img/theKingBlur.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+  pointer-events: none;
+}
+
+#mac-hd-window {
+  position: absolute;
+  left: 1.335%;
+  top: 11.765%;
+  width: 49.467%;
+  height: 66.588%;
+  background-image: url("../img/macHDFocus.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.mac-window {
+  position: relative;
+}
+
+.window-bar {
+  position: absolute;
+  inset: 0 auto auto 0;
+  height: clamp(24px, 4vh, 30px);
+  width: 100%;
+  z-index: 1000;
+  cursor: grab;
+}
+
+.mac-window.dragging .window-bar {
+  cursor: grabbing;
+}
+
+.dragging {
+  cursor: grabbing;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --desktop-padding: clamp(0.75rem, 3vw, 1.5rem);
+  }
+
+  .desktop-stage {
+    box-shadow: none;
+  }
+}
