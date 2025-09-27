@@ -1,87 +1,124 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
    <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="description" content="HTML5 recreation of the Jurassic Park system terminal experience.">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="A modern recreation of the Jurassic Park system security terminal experience.">
+   <meta name="theme-color" content="#000000">
 
    <title>Jurassic Systems</title>
 
-   <link rel="stylesheet" href="css/normalize.css">
    <link rel="icon" href="favicon.ico">
+   <link rel="apple-touch-icon" href="apple-touch-icon.png">
+   <link rel="stylesheet" href="css/normalize.css">
    <link rel="stylesheet" href="css/jurassicSystems.css">
 </head>
 <body>
-   <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-   
-   <div id="environment">
-      <div id="irix-desktop">
-         <div class="irix-window" id="main-terminal" style="z-index: 2">
-            <div class="window-bar"></div>
-            <input type="text" class="buffer" id="main-buffer" autocomplete="off">
-            <div class="inner-wrap" id="main-inner">
-               <div class="terminal-view">
-                  <div class="console-preabmle">
-                     Jurassic Park, System Security Interface<br>
-                     Version 4.0.5, Alpha E<br>
-                     Ready...<br>
-                  </div>
-                  <div id="main-input" class="command-history"></div>
-                  <span id="main-prompt">></span>
-                  <span class="command-input" id="curr-main-input"></span><span id="main-cursor" class="cursor">&nbsp;</span>
-               </div>
-            </div>
-         </div>
-
-         <div class="irix-window" id="gr-osview">
-            <div class="window-bar"></div>
-         </div>
-
-         <div class="irix-window" id="zebra-girl">
-            <div class="window-bar"></div>
-         </div>
-
-         <div class="irix-window" id="chess-terminal" style="z-index: 1">
-            <div class="window-bar"></div>
-            <input type="text" class="buffer" id="chess-buffer" autocomplete="off">
-            <div class="inner-wrap" id="chess-inner">
-               <div class="terminal-view">
-                  <div class="console-preabmle">
-                     <div>CHESS: select level of play desired</div>
-                     <table cellspacing="0">
-                        <!-- table rows -->
-                     </table>
-                     <div class="chess-line">Enter Level: 1</div>
-                     <div class="chess-line">Illegal move</div>
-                  </div>
-                  <div class="command-history"></div>
-                  <span class="command-input" id="curr-chess-input"></span><span id="chess-cursor" class="cursor">&nbsp;</span>
-               </div>
-            </div>
-         </div>
+   <noscript>
+      <div class="no-js-warning" role="alert">
+         Jurassic Systems requires JavaScript to run. Please enable JavaScript in your browser settings.
       </div>
-      <div id="apple-desktop">
-         <div id="mac-hd-window" class="mac-window"></div>
-         <div id="the-king-window" class="mac-window">
-            <div class="window-bar"></div>
-            <video height="540" width="540" loop playsinline id="the-king-video">
-               <source src="vid/theKing.mp4" type="video/mp4">
-               Your browser does not support the video tag
+   </noscript>
+
+   <p class="browsehappy" role="alert" aria-live="assertive" hidden>
+      You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a>
+      to improve your experience.
+   </p>
+
+   <div class="environment-wrapper">
+      <main id="environment" class="environment" role="application" aria-label="Jurassic Systems desktop simulation">
+         <section id="irix-desktop" class="desktop desktop--irix" aria-label="IRIX desktop">
+            <article class="irix-window irix-window--primary" id="main-terminal">
+               <div class="window-bar" aria-hidden="true"></div>
+               <input type="text" class="buffer" id="main-buffer" autocomplete="off" autocapitalize="none" spellcheck="false" aria-hidden="true">
+               <div class="inner-wrap" id="main-inner">
+                  <div class="terminal-view" role="log" aria-live="polite">
+                     <div class="console-preamble">
+                        Jurassic Park, System Security Interface<br>
+                        Version 4.0.5, Alpha E<br>
+                        Ready...<br>
+                     </div>
+                     <div id="main-input" class="command-history" role="list"></div>
+                     <span id="main-prompt" aria-hidden="true">&gt;</span>
+                     <span class="command-input" id="curr-main-input" aria-live="assertive"></span><span id="main-cursor" class="cursor" aria-hidden="true">&nbsp;</span>
+                  </div>
+               </div>
+            </article>
+
+            <article class="irix-window" id="gr-osview" aria-label="System monitor window">
+               <div class="window-bar" aria-hidden="true"></div>
+            </article>
+
+            <article class="irix-window" id="zebra-girl" aria-label="Zebra Girl window" hidden>
+               <div class="window-bar" aria-hidden="true"></div>
+            </article>
+
+            <article class="irix-window irix-window--secondary" id="chess-terminal" aria-label="Chess terminal">
+               <div class="window-bar" aria-hidden="true"></div>
+               <input type="text" class="buffer" id="chess-buffer" autocomplete="off" autocapitalize="none" spellcheck="false" aria-hidden="true">
+               <div class="inner-wrap" id="chess-inner">
+                  <div class="terminal-view" role="log" aria-live="polite">
+                     <div class="console-preamble">
+                        <div>CHESS: select level of play desired</div>
+                        <table cellspacing="0" role="presentation" aria-hidden="true">
+                           <tbody>
+                              <tr>
+                                 <td>1</td>
+                                 <td>Novice</td>
+                              </tr>
+                              <tr>
+                                 <td>2</td>
+                                 <td>Amateur</td>
+                              </tr>
+                              <tr>
+                                 <td>3</td>
+                                 <td>Professional</td>
+                              </tr>
+                              <tr>
+                                 <td>4</td>
+                                 <td>Grandmaster</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <div class="chess-line">Enter Level: 1</div>
+                        <div class="chess-line">Illegal move</div>
+                     </div>
+                     <div class="command-history" role="list"></div>
+                     <span class="command-input" id="curr-chess-input" aria-live="assertive"></span><span id="chess-cursor" class="cursor" aria-hidden="true">&nbsp;</span>
+                  </div>
+               </div>
+            </article>
+         </section>
+
+         <section id="apple-desktop" class="desktop desktop--apple" aria-label="Apple desktop">
+            <article id="mac-hd-window" class="mac-window" aria-label="Macintosh HD window"></article>
+            <article id="the-king-window" class="mac-window" aria-label="The King video window" hidden>
+               <div class="window-bar" aria-hidden="true"></div>
+               <video id="the-king-video" class="king-video" width="540" height="540" loop playsinline preload="auto">
+                  <source src="vid/theKing.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
                </video>
-               <div id="the-king-blur"></div>
-            </div>
-         </div>
-      </div>
+               <div id="the-king-blur" aria-hidden="true"></div>
+            </article>
+         </section>
+      </main>
    </div>
+
    <script src="js/lib/jquery.js" defer></script>
    <script src="js/jurassicSystems.js" defer></script>
    <script>
-      // Check for outdated browser
-      const upgradePrompt = document.querySelector('.browsehappy');
-      if (upgradePrompt && (document.documentMode || /Edge/.test(navigator.userAgent))) {
-         upgradePrompt.classList.add('is-visible');
-      }
+      window.addEventListener('DOMContentLoaded', function () {
+         const upgradePrompt = document.querySelector('.browsehappy');
+         if (!upgradePrompt) {
+            return;
+         }
+
+         const isLegacy = Boolean(document.documentMode) || /MSIE|Trident/.test(navigator.userAgent) || /Edge\/\d+/.test(navigator.userAgent);
+         if (isLegacy) {
+            upgradePrompt.hidden = false;
+            upgradePrompt.classList.add('is-visible');
+         }
+      });
    </script>
 </body>
 </html>
