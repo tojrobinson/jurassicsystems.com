@@ -91,7 +91,8 @@ a:focus-visible {
    top: 0;
    width: 100vw;
    min-height: 100vh;
-   padding: clamp(12px, 2vw, 40px);
+   --desktop-padding: clamp(12px, 2vw, 40px);
+   padding: var(--desktop-padding);
    background-repeat: no-repeat;
    background-size: cover;
    background-position: center;
@@ -174,16 +175,24 @@ a:focus-visible {
 }
 
 #main-terminal {
+   --main-terminal-width: clamp(280px, 55vw, 815px);
+   --main-terminal-height: calc(var(--main-terminal-width) * 582 / 815);
    display: flex;
    flex-direction: column;
    justify-content: flex-start;
-   width: clamp(280px, 55vw, 815px);
+   width: var(--main-terminal-width);
    aspect-ratio: 815 / 582;
    padding: clamp(18px, 3.8vw, 31px) clamp(12px, 3vw, 30px) clamp(20px, 3.4vw, 30px) clamp(16px, 3.7vw, 30px);
    box-sizing: border-box;
    background-image: url("../img/mainTerm.jpg");
-   top: clamp(60px, 14vh, 140px);
-   left: clamp(12px, 12vw, 160px);
+   top: min(
+      clamp(60px, 14vh, 140px),
+      max(0px, calc(100vh - (var(--desktop-padding) * 2) - var(--main-terminal-height)))
+   );
+   left: min(
+      clamp(12px, 12vw, 160px),
+      max(0px, calc(100vw - (var(--desktop-padding) * 2) - var(--main-terminal-width)))
+   );
 }
 
 #main-terminal .inner-wrap {
@@ -204,11 +213,19 @@ a:focus-visible {
 }
 
 #gr-osview {
+   --gr-osview-width: clamp(180px, 26vw, 393px);
+   --gr-osview-height: calc(var(--gr-osview-width) * 369 / 393);
    background-image: url("../img/grOsview.gif");
-   width: clamp(180px, 26vw, 393px);
+   width: var(--gr-osview-width);
    aspect-ratio: 393 / 369;
-   top: clamp(130px, 22vh, 220px);
-   left: clamp(12px, 8vw, 70px);
+   top: min(
+      clamp(130px, 22vh, 220px),
+      max(0px, calc(100vh - (var(--desktop-padding) * 2) - var(--gr-osview-height)))
+   );
+   left: min(
+      clamp(12px, 8vw, 70px),
+      max(0px, calc(100vw - (var(--desktop-padding) * 2) - var(--gr-osview-width)))
+   );
 }
 
 #zebra-girl {
@@ -225,16 +242,24 @@ a:focus-visible {
 }
 
 #chess-terminal {
+   --chess-terminal-width: clamp(260px, 50vw, 820px);
+   --chess-terminal-height: calc(var(--chess-terminal-width) * 215 / 820);
    display: flex;
    flex-direction: column;
    justify-content: flex-start;
-   width: clamp(260px, 50vw, 820px);
+   width: var(--chess-terminal-width);
    aspect-ratio: 820 / 215;
    padding: clamp(14px, 2.8vw, 31px) clamp(12px, 3vw, 30px) clamp(14px, 2.6vw, 28px) clamp(16px, 3.2vw, 30px);
    box-sizing: border-box;
    background-image: url("../img/chessTerm.jpg");
-   top: clamp(320px, 56vh, 600px);
-   left: clamp(8px, 4vw, 50px);
+   top: min(
+      clamp(320px, 56vh, 600px),
+      max(0px, calc(100vh - (var(--desktop-padding) * 2) - var(--chess-terminal-height)))
+   );
+   left: min(
+      clamp(8px, 4vw, 50px),
+      max(0px, calc(100vw - (var(--desktop-padding) * 2) - var(--chess-terminal-width)))
+   );
 }
 
 #chess-terminal .inner-wrap {
@@ -270,19 +295,35 @@ table tr {
 }
 
 #mac-hd-window {
-   width: clamp(240px, 36vw, 556px);
+   --mac-hd-width: clamp(240px, 36vw, 556px);
+   --mac-hd-height: calc(var(--mac-hd-width) * 566 / 556);
+   width: var(--mac-hd-width);
    aspect-ratio: 556 / 566;
    background-image: url("../img/macHDFocus.jpg");
-   top: clamp(60px, 14vh, 120px);
-   left: clamp(12px, 6vw, 100px);
+   top: min(
+      clamp(60px, 14vh, 120px),
+      max(0px, calc(100vh - (var(--desktop-padding) * 2) - var(--mac-hd-height)))
+   );
+   left: min(
+      clamp(12px, 6vw, 100px),
+      max(0px, calc(100vw - (var(--desktop-padding) * 2) - var(--mac-hd-width)))
+   );
 }
 
 #the-king-window {
-   width: clamp(280px, 42vw, 600px);
+   --the-king-width: clamp(280px, 42vw, 600px);
+   --the-king-height: calc(var(--the-king-width) * 620 / 600);
+   width: var(--the-king-width);
    aspect-ratio: 600 / 620;
    background-image: url("../img/theKingFocus.jpg");
-   top: clamp(80px, 18vh, 150px);
-   left: clamp(20px, 7vw, 130px);
+   top: min(
+      clamp(80px, 18vh, 150px),
+      max(0px, calc(100vh - (var(--desktop-padding) * 2) - var(--the-king-height)))
+   );
+   left: min(
+      clamp(20px, 7vw, 130px),
+      max(0px, calc(100vw - (var(--desktop-padding) * 2) - var(--the-king-width)))
+   );
    text-align: center;
    display: none;
 }
@@ -357,7 +398,7 @@ table tr {
 
 @media (max-width: 640px) {
    .desktop {
-      padding: clamp(8px, 4vw, 18px);
+      --desktop-padding: clamp(8px, 4vw, 18px);
    }
 
    #gr-osview,

@@ -4,9 +4,28 @@ const preloadImages = [
   'macHDFocus.jpg',
 ];
 
+const motionQuery = window.matchMedia
+  ? window.matchMedia('(prefers-reduced-motion: reduce)')
+  : null;
+
+let prefersReducedMotion = motionQuery ? motionQuery.matches : false;
+
+if (motionQuery) {
+  const handleMotionChange = (event) => {
+    prefersReducedMotion = event.matches;
+  };
+
+  if (typeof motionQuery.addEventListener === 'function') {
+    motionQuery.addEventListener('change', handleMotionChange);
+  } else if (typeof motionQuery.addListener === 'function') {
+    motionQuery.addListener(handleMotionChange);
+  }
+}
+
 const preloadAssets = (imageNames) => {
   imageNames.forEach((imageName) => {
     const img = new Image();
+    img.decoding = 'async';
     img.src = `img/${imageName}`;
   });
 };
@@ -26,6 +45,14 @@ const attemptVideoPlayback = (video) => {
 
 const flickerElement = (element, interval, duration) => {
   if (!element) {
+    return;
+  }
+
+  if (prefersReducedMotion) {
+    element.style.opacity = '1';
+    window.setTimeout(() => {
+      element.style.opacity = '0';
+    }, Math.min(duration, 200));
     return;
   }
 
@@ -134,6 +161,7 @@ const initialiseTheKing = () => {
 
     if (theKingWindow) {
       theKingWindow.hidden = false;
+      theKingWindow.removeAttribute('hidden');
       theKingWindow.setAttribute('aria-hidden', 'false');
     }
   }, 2500);
@@ -141,6 +169,10 @@ const initialiseTheKing = () => {
   appleDesktop?.addEventListener('click', (event) => {
     if (!theKingWindow || theKingWindow.contains(event.target)) {
       return;
+    }
+
+    if (theKingVideo && theKingVideo.paused) {
+      attemptVideoPlayback(theKingVideo);
     }
 
     flickerElement(theKingBlur, 50, 450);
