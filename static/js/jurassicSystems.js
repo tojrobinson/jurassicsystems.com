@@ -18,11 +18,35 @@
     };
     const api = {};
 
+    const normalizeCommandName = function(name) {
+      return (name || '').trim().toLowerCase();
+    };
+
+    const findCommandDetails = function(name) {
+      let normalized = normalizeCommandName(name);
+      if (!normalized) {
+        return null;
+      }
+
+      if (Object.prototype.hasOwnProperty.call(env.commands, normalized)) {
+        return env.commands[normalized];
+      }
+
+      let candidate = normalized;
+      while (candidate.length > 1 && candidate[0] === candidate[1]) {
+        candidate = candidate.slice(1);
+        if (Object.prototype.hasOwnProperty.call(env.commands, candidate)) {
+          return env.commands[candidate];
+        }
+      }
+
+      return null;
+    };
+
     api.buildCommandLine = function(line) {
-      const commandName = line.trim().split(/ /)[0];
-      const command =
-        env.commands[commandName] &&
-        env.commands[commandName].command;
+      const commandName = line.trim().split(/ +/)[0] || '';
+      const commandDetails = findCommandDetails(commandName);
+      const command = commandDetails && commandDetails.command;
 
       env.active.find('.command-history')
         .append($('<div class="entered-command" role="listitem">')
@@ -37,12 +61,15 @@
     }
 
     api.addCommand = function(details) {
+      const normalizedName = normalizeCommandName(details.name);
       if (
-        details.name &&
-        !Object.prototype.hasOwnProperty.call(env.commands, details.name) &&
-        (details.command.constructor === Function)
+        normalizedName &&
+        !Object.prototype.hasOwnProperty.call(env.commands, normalizedName) &&
+        (details.command && details.command.constructor === Function)
       ) {
-        env.commands[details.name] = details;
+        env.commands[normalizedName] = Object.assign({}, details, {
+          normalizedName: normalizedName,
+        });
       }
     }
 
@@ -585,8 +612,9 @@
       const arg = inputLine.trim().split(/ +/)[1] || '';
       let output = 'What manual page do you want?';
 
-      if (Object.prototype.hasOwnProperty.call(env.commands, arg)) {
-        output = env.commands[arg].manPage;
+      const targetCommand = findCommandDetails(arg);
+      if (targetCommand) {
+        output = targetCommand.manPage;
       } else if (arg) {
         output = 'No manual entry for ' + $('<div/>').text(arg).html();
       }
