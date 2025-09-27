@@ -1,172 +1,128 @@
+:root {
+   color-scheme: dark;
+   --environment-scale: 1;
+}
+
+*,
+*::before,
+*::after {
+   box-sizing: border-box;
+}
+
+html {
+   height: 100%;
+}
+
 body {
+   margin: 0;
+   min-height: 100vh;
+   background: #000;
+   color: #ccc;
+   font-family: "Courier New", Courier, monospace;
    overflow-x: hidden;
-   overflow-y: auto;
-   padding: 0px;
-   margin: 0px;
-   background: black;
-   width: 100%;
-   height: 100%;
 }
 
-#environment {
-   position: relative;
+a {
+   color: #ccc;
 }
 
-#irix-boot {
-   position: absolute;
-   background: #6ba1d8;
-   z-index: 60000;
-   margin-left: 10px;
-   margin-top: 10px;
-   width: 1124px;
-   height: 850px;
+a:hover,
+a:focus-visible {
+   color: #fff;
 }
 
-.view-cover {
-   height: 100%;
-   width: 100%;
-   position: fixed;
-   background: black;
-   opacity: 0.5;
+.no-js-warning {
+   margin: 0;
+   padding: 1rem;
+   background: #221;
+   color: #fff;
+   text-align: center;
 }
 
-#intro {
-   height: 100%;
-   width: 100%;
-   position: absolute;
+.browsehappy {
    display: none;
-   z-index: 60000;
+   margin: 0;
+   padding: 1rem;
+   background: #221;
+   color: #fff;
+   text-align: center;
 }
 
-#intro-scene {
+.browsehappy a {
+   color: #5fde5f;
+}
+
+.browsehappy.is-visible {
    display: block;
 }
 
-#intro-box {
-   position: fixed;
-   top: 180px;
-   left: 280px;
-   background: black;
-   padding: 20px;
+[hidden] {
+   display: none !important;
 }
 
-#intro-text {
-   width: 450px;
-   color: #cdcdcd;
-   font-family: Helvetica;
-   font-size: 15px;
-   margin-top: 17px;
-   display: inline-block;
+.environment-wrapper {
+   position: relative;
+   width: 100%;
+   min-height: 100vh;
+   overflow: hidden;
+   background: #000;
 }
 
-#intro-divider {
-   height: 50px;
-   margin-left: 10px;
-   margin-right: 10px;
-   display: inline-block;
-   border-left: solid 1px #777777;
-}
-
-#continue-button {
-   display: inline-block;
-   margin-top: 20px;
-}
-
-#continue-button:hover {
-   cursor: pointer;
-}
-
-#boot-dialogue {
-   position: absolute;
-   margin: auto;
-   top: 200px;
+.environment {
+   position: relative;
+   width: 100%;
+   min-height: 100vh;
    left: 0;
-   right: 0;
+   top: 0;
+   transform-origin: top left;
+   transform: scale(var(--environment-scale));
+   transition: transform 0.3s ease;
+   will-change: transform;
 }
 
-#home-key {
-   position: fixed;
-   bottom: 10px;
-   right: 10px;
-   opacity: 0.7;
+@media (prefers-reduced-motion: reduce) {
+   .environment {
+      transition: none;
+   }
 }
 
-#home-key:hover {
-   opacity: 1;
-}
-
-#command-help {
-   width: 300px;
+.desktop {
    position: absolute;
-   bottom: 150px;
-   right: 20px;
-   z-index: 62000;
-   color: white;
-}
-
-#commands-title {
-   opacity: 0.7;
-}
-
-#command-help .highlighted {
-   background: #444;
-}
-
-#command-help td {
-   border: solid 1px #444;
-   padding: 5px;
-}
-
-#irix-desktop {
-   background-image: url("/img/irixBackground.jpg");
+   top: 0;
+   width: 100vw;
+   min-height: 100vh;
+   --desktop-padding: clamp(12px, 2vw, 40px);
+   padding: var(--desktop-padding);
    background-repeat: no-repeat;
-   overflow: hidden;
-   margin-left: 10px;
-   margin-top: 10px;
-   width: 1124px;
-   height: 850px;
+   background-size: cover;
+   background-position: center;
    overflow: hidden;
 }
 
-#apple-desktop {
-   background-image: url("/img/appleBackground.jpg");
-   background-repeat: no-repeat;
-   overflow: hidden;
-   margin-left: 10px;
-   margin-top: 10px;
-   position: absolute;
-   left: -3000px;
-   width: 1124px;
-   height: 850px;
-   border-radius: 10px;
+.desktop--irix {
+   left: 0;
+   background-image: url("../img/irixBackground.jpg");
 }
 
-#main-terminal {
-   height: 582px;
-   width: 815px;
-   margin: auto;
-   padding-top: 31px;
-   padding-left: 30px;
-   background-image: url("/img/mainTerm.jpg");
-   background-repeat: no-repeat;
-   position: absolute;
-   top: 120px;
-   left: 160px;
-}
-
-#main-terminal .inner-wrap {
-   height: 570px;
-   width: 800px;
-   overflow: hidden;
-}
-
-.irix-window a {
-   color: #cccccc;
+.desktop--apple {
+   left: -3200px;
+   background-image: url("../img/appleBackground.jpg");
+   border-radius: 12px;
 }
 
 .irix-window,
 .mac-window {
-   position: relative;
+   position: absolute;
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+
+.irix-window--primary {
+   z-index: 2;
+}
+
+.irix-window--secondary {
+   z-index: 1;
 }
 
 .window-bar {
@@ -181,120 +137,36 @@ body {
    cursor: move;
 }
 
-.command-history, .command-input, .entered-command {
-   white-space: pre;
-   white-space: pre-wrap;
-   white-space: -moz-pre-wrap;
-}
-
-#chess-terminal {
-   background-image: url("/img/chessTerm.jpg");
-   background-repeat: no-repeat;
-   padding-top: 31px;
-   padding-left: 30px;
-   height: 215px;
-   width: 820px;
-   position: absolute;
-   top: 600px;
-   left: 5px;
-}
-
-#chess-terminal .inner-wrap {
-   height: 207px;
-   width: 805px;
-   overflow: hidden;
-}
-
-#zebra-girl {
-   height: 760px;
-   width: 662px;
-   position: absolute;
-   display: none;
-   right: 20px;
-   top: 40px;
-   background-image: url("/img/zebraGirlWindow.jpg");
-}
-
-.terminal-view {
-   font-family: 'Courier';
-   font-weight: 700;
-   font-size: 15px;
-   color: #CCCCCC;
-   word-wrap: break-word;
-}
-
-.terminal-input {
-   width: 100%;
-}
-
-#gr-osview {
-   background-image: url('/img/grOsview.gif');
-   background-repeat: no-repeat;
-   height: 369px;
-   width: 393px;
-   position: absolute;
-   top: 220px;
-   left: 70px;
-}
-
-#the-king-window {
-   display: none;
-   background-image: url('/img/theKingFocus.jpg');
-   background-repeat: no-repeat;
-   width: 600px;
-   height: 620px;
-   position: absolute;
-   left: 50px;
-   top: 130px;
-   text-align: center;
-}
-
-#the-king-video {
-  margin-top: 40px;
-}
-
-#the-king-blur {
-   background-image: url('/img/theKingBlur.jpg');
-   width: 600px;
-   height: 620px;
-   position: absolute;
-   top: 0;
-   left: 0;
-   opacity: 0;
-   display: none;
-}
-
-#king-animation {
-   margin: 50px;
-   z-index: 50000;
-}
-
-#king-swf {
-   z-index: 64000;
-}
-
-#mac-hd-window {
-   width: 556px;
-   height: 566px;
-   background-image: url("/img/macHDFocus.jpg");
-   background-repeat: no-repeat;
-   position: absolute;
-   left: 15px;
-   top: 100px
-}
-
 .buffer {
    position: absolute;
    left: -10000px;
    top: -10000px;
+   width: 0;
+   height: 0;
+   opacity: 0;
 }
 
-.hide {
-   display: none;
+.terminal-view {
+   font-weight: 700;
+   font-size: clamp(12px, 1.1vw, 15px);
+   color: #ccc;
+   word-wrap: break-word;
+}
+
+.console-preamble {
+   margin-bottom: clamp(12px, 2vw, 20px);
+}
+
+.command-history,
+.command-input,
+.entered-command {
+   white-space: pre-wrap;
+   word-break: break-word;
 }
 
 .cursor {
-   font-size: 15px;
+   display: inline-block;
+   width: 0.8ch;
    border: solid 1px #5fde5f;
 }
 
@@ -302,55 +174,235 @@ body {
    background: #5fde5f;
 }
 
-#irix-desktop {
+#main-terminal {
+   --main-terminal-width: clamp(280px, 55vw, 815px);
+   --main-terminal-height: calc(var(--main-terminal-width) * 582 / 815);
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   width: var(--main-terminal-width);
+   aspect-ratio: 815 / 582;
+   padding: clamp(18px, 3.8vw, 31px) clamp(12px, 3vw, 30px) clamp(20px, 3.4vw, 30px) clamp(16px, 3.7vw, 30px);
+   box-sizing: border-box;
+   background-image: url("../img/mainTerm.jpg");
+   top: min(
+      clamp(60px, 14vh, 140px),
+      max(0px, calc(100vh - (var(--desktop-padding) * 2) - var(--main-terminal-height)))
+   );
+   left: min(
+      clamp(12px, 12vw, 160px),
+      max(0px, calc(100vw - (var(--desktop-padding) * 2) - var(--main-terminal-width)))
+   );
+}
+
+#main-terminal .inner-wrap {
+   flex: 1 1 auto;
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
+}
+
+#main-inner .terminal-view {
+   height: 100%;
+   overflow-y: auto;
+   padding-right: clamp(4px, 0.8vw, 12px);
+}
+
+#main-prompt {
+   margin-right: 0.3ch;
+}
+
+#gr-osview {
+   --gr-osview-width: clamp(180px, 26vw, 393px);
+   --gr-osview-height: calc(var(--gr-osview-width) * 369 / 393);
+   background-image: url("../img/grOsview.gif");
+   width: var(--gr-osview-width);
+   aspect-ratio: 393 / 369;
+   top: min(
+      clamp(130px, 22vh, 220px),
+      max(0px, calc(100vh - (var(--desktop-padding) * 2) - var(--gr-osview-height)))
+   );
+   left: min(
+      clamp(12px, 8vw, 70px),
+      max(0px, calc(100vw - (var(--desktop-padding) * 2) - var(--gr-osview-width)))
+   );
+}
+
+#zebra-girl {
+   background-image: url("../img/zebraGirlWindow.jpg");
+   width: clamp(240px, 45vw, 662px);
+   aspect-ratio: 662 / 760;
+   top: clamp(20px, 9vh, 60px);
+   right: clamp(12px, 6vw, 60px);
+   display: none;
+}
+
+#zebra-girl.is-visible {
+   display: block;
+}
+
+#chess-terminal {
+   --chess-terminal-width: clamp(260px, 50vw, 820px);
+   --chess-terminal-height: calc(var(--chess-terminal-width) * 215 / 820);
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   width: var(--chess-terminal-width);
+   aspect-ratio: 820 / 215;
+   padding: clamp(14px, 2.8vw, 31px) clamp(12px, 3vw, 30px) clamp(14px, 2.6vw, 28px) clamp(16px, 3.2vw, 30px);
+   box-sizing: border-box;
+   background-image: url("../img/chessTerm.jpg");
+   top: min(
+      clamp(320px, 56vh, 600px),
+      max(0px, calc(100vh - (var(--desktop-padding) * 2) - var(--chess-terminal-height)))
+   );
+   left: min(
+      clamp(8px, 4vw, 50px),
+      max(0px, calc(100vw - (var(--desktop-padding) * 2) - var(--chess-terminal-width)))
+   );
+}
+
+#chess-terminal .inner-wrap {
+   flex: 1 1 auto;
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
+}
+
+#chess-inner .terminal-view {
+   height: 100%;
+   overflow-y: auto;
+   padding-right: clamp(4px, 0.8vw, 10px);
+}
+
+.chess-line {
+   margin-top: 4px;
+}
+
+table {
+   border-collapse: collapse;
+}
+
+table td,
+table tr {
+   padding: 0;
+   text-align: left;
+   line-height: 1.1;
+}
+
+#apple-desktop .mac-window {
    position: absolute;
 }
 
-table td, tr {
-   padding: 0px;
-   text-align: left;
-   line-height: 15px;
+#mac-hd-window {
+   --mac-hd-width: clamp(240px, 36vw, 556px);
+   --mac-hd-height: calc(var(--mac-hd-width) * 566 / 556);
+   width: var(--mac-hd-width);
+   aspect-ratio: 556 / 566;
+   background-image: url("../img/macHDFocus.jpg");
+   top: min(
+      clamp(60px, 14vh, 120px),
+      max(0px, calc(100vh - (var(--desktop-padding) * 2) - var(--mac-hd-height)))
+   );
+   left: min(
+      clamp(12px, 6vw, 100px),
+      max(0px, calc(100vw - (var(--desktop-padding) * 2) - var(--mac-hd-width)))
+   );
 }
 
-#chess-terminal table td, tr {
-   padding-left: 5px;
-   padding-right: 5px;
-   line-height: 13px;
-   width: 50px;
+#the-king-window {
+   --the-king-width: clamp(280px, 42vw, 600px);
+   --the-king-height: calc(var(--the-king-width) * 620 / 600);
+   width: var(--the-king-width);
+   aspect-ratio: 600 / 620;
+   background-image: url("../img/theKingFocus.jpg");
+   top: min(
+      clamp(80px, 18vh, 150px),
+      max(0px, calc(100vh - (var(--desktop-padding) * 2) - var(--the-king-height)))
+   );
+   left: min(
+      clamp(20px, 7vw, 130px),
+      max(0px, calc(100vw - (var(--desktop-padding) * 2) - var(--the-king-width)))
+   );
+   text-align: center;
+   display: none;
 }
 
-#system-output td{
-   width: 185px;
+#the-king-window.is-visible {
+   display: block;
 }
 
-input[type="button"], button {
-   border:0 none;
-   font:inherit;
+.king-video {
+   width: min(100%, 540px);
+   height: auto;
+   margin: clamp(20px, 4vw, 40px) auto 0;
+   display: block;
+   background: #000;
+   border-radius: 4px;
 }
 
-*:focus{outline:0 none;}
-input[type="button"], button {-moz-box-sizing: content-box;}
-input[type="button"]::-moz-focus-inner, button::-moz-focus-inner { padding:0;border:0 none; }
+#the-king-blur {
+   position: absolute;
+   inset: 0;
+   background-image: url("../img/theKingBlur.jpg");
+   background-size: cover;
+   background-position: center;
+   opacity: 0;
+   display: none;
+}
+
+.ascii-output img {
+   display: block;
+   max-width: 100%;
+   height: auto;
+   margin: clamp(8px, 2vw, 16px) auto;
+}
+
+.keychecks-output pre {
+   margin: 0;
+   white-space: pre-wrap;
+   font-family: inherit;
+   font-size: clamp(11px, 1vw, 14px);
+   line-height: 1.3;
+}
+
+.hide {
+   display: none !important;
+}
 
 .button {
-   background-image:url("/img/buttonOverlay.png");
-   -moz-border-radius:5px;
-   -webkit-border-radius:5px;
-   border-radius:5px;
-   cursor:pointer;
-   display:inline-block;
-   line-height:1;
-   overflow:visible;
-   position:relative;
-   text-decoration:none;
-   width:auto;
-   text-align:center;
-   background-color:#FFFFFF;
-   border:1px solid #CCCCCC;
-   color:#666666 !important;
-   font-weight:normal;
-   font-size:14px;
-   font-family: 'Arial';
-   text-shadow:0 1px 1px #FFFFFF;
-   padding:7px 16px;
+   background-image: url("../img/buttonOverlay.png");
+   border-radius: 5px;
+   cursor: pointer;
+   display: inline-block;
+   line-height: 1;
+   overflow: visible;
+   position: relative;
+   text-decoration: none;
+   width: auto;
+   text-align: center;
+   background-color: #ffffff;
+   border: 1px solid #cccccc;
+   color: #666666 !important;
+   font-weight: normal;
+   font-size: 14px;
+   font-family: 'Arial', sans-serif;
+   text-shadow: 0 1px 1px #ffffff;
+   padding: 7px 16px;
+}
+
+:focus-visible {
+   outline: 2px solid #5fde5f;
+   outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+   .desktop {
+      --desktop-padding: clamp(8px, 4vw, 18px);
+   }
+
+   #gr-osview,
+   #zebra-girl {
+      display: none;
+   }
 }

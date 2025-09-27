@@ -1,99 +1,134 @@
+:root {
+  color-scheme: dark;
+  --desktop-padding: clamp(1rem, 4vw, 3rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
-   overflow-x: hidden;
-   overflow-y: scroll;
-   padding: 0px;
-   margin: 0px;
-   background: black;
-}
-
-#environment {
-   position: relative;
-}
-
-#home-key {
-   position: fixed;
-   bottom: 10px;
-   right: 10px;
-   opacity: 0.7;
-}
-
-#home-key:hover {
-   opacity: 1;
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  background-image: url("../img/appleBackground.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  overflow: auto;
 }
 
 #apple-desktop {
-   background-image: url("/img/appleBackground.jpg");
-   background-repeat: no-repeat;
-   overflow: hidden;
-   margin-left: 10px;
-   margin-top: 10px;
-   position: absolute;
-   width: 1124px;
-   height: 850px;
-   border-radius: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: var(--desktop-padding);
+}
+
+.desktop-stage {
+  position: relative;
+  width: min(
+    1124px,
+    max(320px, calc(100vw - 2 * var(--desktop-padding))),
+    max(320px, calc((100vh - 2 * var(--desktop-padding)) * 1124 / 850))
+  );
+  aspect-ratio: 1124 / 850;
+  border-radius: 10px;
+  overflow: hidden;
+  background-image: url("../img/appleBackground.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.65);
 }
 
 #the-king-window {
-   display: none;
-   background-image: url('/img/theKingFocus.jpg');
-   background-repeat: no-repeat;
-   width: 600px;
-   height: 620px;
-   position: absolute;
-   left: 50px;
-   top: 130px;
-   text-align: center;
+  position: absolute;
+  left: 4.451%;
+  top: 15.294%;
+  width: 53.376%;
+  height: 72.941%;
+  background-image: url("../img/theKingFocus.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
 }
 
-#the-king-animation {
-   position: absolute;
-   top: 40px;
-   left: 80px;
-   z-index: 64000;
+#the-king-window[hidden] {
+  display: none;
+}
+
+#the-king-video {
+  width: 90%;
+  max-width: 540px;
+  aspect-ratio: 1 / 1;
+  margin-top: clamp(1rem, 6.5%, 2.5rem);
+  border-radius: 8px;
 }
 
 #the-king-blur {
-   background-image: url('/img/theKingBlur.jpg');
-   width: 600px;
-   height: 620px;
-   position: absolute;
-   top: 0;
-   left: 0;
-   opacity: 0;
-}
-
-#king-animation {
-   margin: 50px;
-   z-index: 50000;
-}
-
-#king-swf {
-   z-index: 64000;
+  position: absolute;
+  inset: 0;
+  background-image: url("../img/theKingBlur.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+  pointer-events: none;
 }
 
 #mac-hd-window {
-   width: 556px;
-   height: 566px;
-   background-image: url("/img/macHDFocus.jpg");
-   background-repeat: no-repeat;
-   position: absolute;
-   left: 15px;
-   top: 100px
+  position: absolute;
+  left: 1.335%;
+  top: 11.765%;
+  width: 49.467%;
+  height: 66.588%;
+  background-image: url("../img/macHDFocus.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .mac-window {
-   position: relative;
+  position: relative;
 }
 
 .window-bar {
-   position: absolute;
-   top: 0;
-   left: 0;
-   height: 30px;
-   width: 100%;
-   z-index: 1000;
+  position: absolute;
+  inset: 0 auto auto 0;
+  height: clamp(24px, 4vh, 30px);
+  width: 100%;
+  z-index: 1000;
+  cursor: grab;
+}
+
+.mac-window.dragging .window-bar {
+  cursor: grabbing;
 }
 
 .dragging {
-   cursor: move;
+  cursor: grabbing;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --desktop-padding: clamp(0.75rem, 3vw, 1.5rem);
+  }
+
+  .desktop-stage {
+    box-shadow: none;
+  }
 }
