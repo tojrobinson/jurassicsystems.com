@@ -237,6 +237,16 @@ body {
    left: 70px;
 }
 
+#SCR-window {
+   background-image: url('/img/SCRWindow.jpg');
+   background-repeat: no-repeat;
+   height: 341px;
+   width: 480px;
+   position: absolute;
+   top: 256px;
+   left: 85px;
+}
+
 #the-king-window {
    display: none;
    background-image: url('/img/theKingFocus.jpg');

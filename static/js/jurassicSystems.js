@@ -10,6 +10,9 @@
     };
     const api = {};
 
+    const user = env.currUse || 'Root';
+    formUse = "Root";
+
     api.buildCommandLine = function(line) {
       const commandName = line.trim().split(/ /)[0];
       const command =
@@ -161,90 +164,99 @@
     },
   });
 
-  jpTerminal.addCommand({
-    name: 'access', 
-    summary: 'access a target environment on the Jurassic Systems grid',
-    manPage: 'SYNOPSIS\n' +
-             '\taccess [SYSTEM_NAME] [MAGIC_WORD]\n\n' +
-             'DESCRIPTION\n' + 
-             '\tGain read and write access to a specified environment.\n\n' +
-             'AUTHOR\n' +
-             '\tWritten by Dennis Nedry.\n',
-    command: function(env, inputLine) {
+jpTerminal.addCommand({
+  name: 'access',
+  summary: 'access a target environment on the Jurassic Systems grid',
+  manPage: 'SYNOPSIS\n' +
+    '\taccess [SYSTEM_NAME] [MAGIC_WORD]\n\n' +
+    'DESCRIPTION\n' +
+    '\tGain read and write access to a specified environment.\n\n' +
+    'AUTHOR\n' +
+    '\tWritten by Dennis Nedry.\n',
+  command: function(env, inputLine) {
+    formUse = env.currUse;
+
+    const arg = inputLine.split(/ +/)[1] || '';
+    const magicWord = inputLine.substring(inputLine.trim().lastIndexOf(' ')) || '';
+
+    if (arg === '') {
+      $('#main-input').append($('<span/>')
+        .text('access: must specify target system'));
+      return;
+    } 
+    
+    else if (
+      inputLine.split(' ').length > 2 &&
+      magicWord.trim() === 'please'
+    ) {
+      $('#main-input')
+        .append($('<img id="asciiNewman" src="/img/asciiNewman.jpg" />'));
+      $('#asciiNewman').load(function() {
+        const wrap = $('.inner-wrap', env.active);
+        wrap.scrollTop(wrap[0].scrollHeight);
+      });
+
+      return;
+    }
+
+    if (formUse === 'Nedry') {
+      $('#main-input').append($('<span/>')
+        .text('access: Access granted! Go ahead.'));
+      return;
+    } else {
       const output = $('<span>').text('access: PERMISSION DENIED.');
-      const arg = inputLine.split(/ +/)[1] || '';
-      const magicWord =
-        inputLine.substring(inputLine.trim().lastIndexOf(' ')) || '';
-
-      if (arg === '') {
-        $('#main-input').append($('<span/>')
-          .text('access: must specify target system'));
-
-        return;
-      } else if (
-        inputLine.split(' ').length > 2 &&
-        magicWord.trim() === 'please'
-      ) {
-        $('#main-input')
-          .append($('<img id="asciiNewman" src="/img/asciiNewman.jpg" />'));
-        $('#asciiNewman').load(function() {
-          const wrap = $('.inner-wrap', env.active);
-          wrap.scrollTop(wrap[0].scrollHeight);
-        });
-
-        return;
-      }
-
       $('#main-input').append(output);
       env.sounds.beep.play();
-
-      if (++env.accessAttempts >= 3) {
-        const andMessage = $('<span>').text('...and...');
-        let errorSpam;
-
-        $('.irix-window').unbind('keydown');
-        $('#main-prompt').addClass('hide');
-
-        setTimeout(function() {
-          $('#main-input').append(andMessage);
-        }, 200);
-
-        setTimeout(function() {
-          env.sounds.lockDown.play();
-        }, 1000);
-
-        setTimeout(function() {
-          $('#environment').animate(
-            {'left': '+=3000'},
-            2000,
-            function() {
-              setTimeout(function() {
-                const theKingVideo = document.getElementById('the-king-video');
-
-                errorSpam != null && clearInterval(errorSpam);
-                theKingVideo != null && theKingVideo.play();
-                $('#irix-desktop').hide();
-                $('#mac-hd-window').css('background-image', 'url(/img/macHDBlur.jpg)');
-                $('#the-king-window').show();
-
-                setTimeout(function() {
-                  $('#home-key').css('z-index', '64000');
-                }, 10000);
-              }, 2000);
-            },
-          );
-        }, 4000);
-
-        setTimeout(function() {
-          errorSpam = setInterval(function() {
-            var errorMessage = $('<div>YOU DIDN\'T SAY THE MAGIC WORD!</div>');
-            $('#main-input').append(errorMessage);
-            $('#main-inner').scrollTop($('#main-inner')[0].scrollHeight);
-          }, 50);
-        }, 1000);
-      }
     }
-  });
+
+    if (++env.accessAttempts >= 3) {
+      const andMessage = $('<span>').text('...and...');
+      let errorSpam;
+
+      $('.irix-window').unbind('keydown');
+      $('#main-prompt').addClass('hide');
+
+      setTimeout(function() {
+        $('#main-input').append(andMessage);
+      }, 200);
+
+      setTimeout(function() {
+        env.sounds.lockDown.play();
+      }, 1000);
+
+      setTimeout(function() {
+        $('#environment').animate({
+            'left': '+=3000'
+          },
+          2000,
+          function() {
+            setTimeout(function() {
+              const theKingVideo = document.getElementById('the-king-video');
+
+              errorSpam != null && clearInterval(errorSpam);
+              theKingVideo != null && theKingVideo.play();
+              $('#irix-desktop').hide();
+              $('#mac-hd-window').css('background-image', 'url(/img/macHDBlur.jpg)');
+              $('#the-king-window').show();
+
+              setTimeout(function() {
+                $('#home-key').css('z-index', '64000');
+              }, 10000);
+            }, 2000);
+          },
+        );
+      }, 4000);
+
+      setTimeout(function() {
+        errorSpam = setInterval(function() {
+          var errorMessage = $('<div>YOU DIDN\'T SAY THE MAGIC WORD!</div>');
+          $('#main-input').append(errorMessage);
+          $('#main-inner').scrollTop($('#main-inner')[0].scrollHeight);
+        }, 50);
+      }, 1000);
+    }
+  }
+});
 
   jpTerminal.addCommand({
     name: 'system',
@@ -303,6 +315,100 @@
       $('#main-input').append($('<div>zebraGirl.jpg</div>'));
     }
   });
+
+jpTerminal.addCommand({
+    name: 'gfxinfo',
+    summary: 'show details about graphics hardware',
+    manPage: 'SYNOPSIS\n' + 
+             '\tgfxinfo\n\n' +
+             'DESCRIPTION\n' + 
+             '\tGraphics board information and graphics configuration details.\n\n' +
+             'AUTHOR\n' + 
+             '\tWritten by Vili Virtanen.\n',
+    command: function(env, inputLine) {
+        const output = [
+            'Graphics board 0 is "GR3-Elan"',
+            'Managed by "mgr0", 1280x1024 pixels, 2 monitors.',
+            'Display board 0: 24 bitplanes, 8-bit color map, 4 overlay planes.',
+            'Z-buffer: 24 bits deep.',
+            'Hardware version: 2.1, Firmware version: 1.4'
+        ].join('<br>');
+
+        $('#main-input').append($('<span/>').html(output));
+    }
+});
+
+
+jpTerminal.addCommand({
+    name: 'nedry',
+    summary: '???',
+    manPage: 'SYNOPSIS\n\tnedry\n\nDESCRIPTION\n\t???\n\nAUTHOR\n\tWritten by Dennis Nedry.\n',
+    command: function(env, inputLine) {
+
+      const user = env.currUse || 'Root';
+        if (user !== 'Nedry') {
+            const output = ['Must be logged in as Nedry!!!'];
+            $('#main-input').append($('<span/>').html(output));
+            env.sounds.beep.play();
+            return;
+        }
+
+        if (!env.nedryVarSet) {
+            env.nedryVarSet = true; 
+            const output = ['Variable set to 1'];
+            $('#main-input').append($('<span/>').html(output));
+        } else {
+            const output = ['Already set to 1'];
+            $('#main-input').append($('<span/>').html(output));
+        }
+        
+        const wrap = $('.inner-wrap', env.active);
+        wrap.scrollTop(wrap[0].scrollHeight);
+    }
+});
+
+jpTerminal.addCommand({
+    name: 'whoami',
+    summary: 'print current user account',
+    manPage: 'SYNOPSIS\n\twhoami\n\nDESCRIPTION\n\tTells you which user is currently logged in.\n\nAUTHOR\n\tWritten by Vili Virtanen.\n',
+    command: function(env, inputLine) {
+        env.currUse = user;
+        $('#main-input').append($('<div>').text(user.toLowerCase()));
+    }
+});
+
+jpTerminal.addCommand({
+    name: 'login',
+    summary: 'login as a specified user',
+    manPage: 'SYNOPSIS\n\tlogin [USER]\n\nDESCRIPTION\n\tChange the current user logged in.\n\nAUTHOR\n\tWritten by Vili Virtanen.\n',
+    command: function(env, inputLine) {
+        if (!env.currUse) { env.currUse = 'Nedry'; }
+
+        const args = inputLine.trim().split(/ +/);
+        const targUse = args[1];
+
+        if (!targUse) {
+            $('#main-input').append($('<div>').text('usage: login [username]'));
+            return;
+        }
+
+        const formUse = targUse.charAt(0).toUpperCase() + targUse.slice(1).toLowerCase();
+
+        if (formUse !== 'Nedry' && formUse !== 'Arnold') {
+            $('#main-input').append($('<div>').text('login: unknown user: ' + targUse));
+            return;
+        }
+
+        if (formUse === env.currUse) {
+            $('#main-input').append($('<div>').text('login: already logged in as ' + formUse));
+        } else {
+            env.currUse = formUse;
+            $('#main-input').append($('<div>').text('Identity changed. Now logged in as ' + env.currUse + '.'));
+            
+            $('#main-prompt').text(env.currUse.toLowerCase() + '> ');
+        }
+    }
+});
 
   jpTerminal.addCommand({
     name: 'display',
